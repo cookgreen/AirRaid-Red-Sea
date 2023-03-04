@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirRaidRedSea", "AirRaidRedSea\AirRaidRedSea.csproj", "{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}.Debug|x86.ActiveCfg = Debug|x86
+		{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}.Debug|x86.Build.0 = Debug|x86
+		{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}.Release|x86.ActiveCfg = Release|x86
+		{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64939C04-B932-4BBC-9D19-58E4F1A8537A}
+	EndGlobalSection
+EndGlobal

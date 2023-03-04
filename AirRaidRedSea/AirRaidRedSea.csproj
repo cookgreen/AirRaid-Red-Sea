@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AirRaidRedSea</RootNamespace>
+    <AssemblyName>AirRaidRedSea</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\Bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>..\Bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>AirRaidRedSea.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="eyecm.PhysX">
+      <HintPath>..\Depends\eyecm.PhysX.dll</HintPath>
+    </Reference>
+    <Reference Include="Mogre">
+      <HintPath>..\Depends\Mogre.dll</HintPath>
+    </Reference>
+    <Reference Include="Mogre-Procedural">
+      <HintPath>..\Depends\Mogre-Procedural.dll</HintPath>
+    </Reference>
+    <Reference Include="Mogre_Procedural.MogreBites">
+      <HintPath>..\Depends\Mogre_Procedural.MogreBites.dll</HintPath>
+    </Reference>
+    <Reference Include="Mogre_Procedural.MogreBites.Addons">
+      <HintPath>..\Depends\Mogre_Procedural.MogreBites.Addons.dll</HintPath>
+    </Reference>
+    <Reference Include="MOIS">
+      <HintPath>..\Depends\MOIS.dll</HintPath>
+    </Reference>
+    <Reference Include="MyGUI.Sharp">
+      <HintPath>..\Depends\MyGUI.Sharp.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio">
+      <HintPath>..\Depends\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Vorbis">
+      <HintPath>..\Depends\NAudio.Vorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="NVorbis">
+      <HintPath>..\Depends\NVorbis.dll</HintPath>
+    </Reference>
+    <Reference Include="OgreFramework">
+      <HintPath>..\Depends\OgreFramework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GameState.cs" />
+    <Compile Include="MainGame.cs" />
+    <Compile Include="MainGameApp.cs" />
+    <Compile Include="MenuState.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AirRaidRedSea.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

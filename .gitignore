@@ -1,0 +1,8 @@
+.vs/*
+*/bin/*
+*/obj/*
+Bin/*.log
+Bin/*.exe
+Bin/*.pdb
+Bin/*.config
+Bin/*.manifest
