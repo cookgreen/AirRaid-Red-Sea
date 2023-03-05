@@ -20,6 +20,8 @@ namespace AirRaidRedSea
         {
             FontManager.Singleton.GetByName("SdkTrays/Caption").Load();
 
+            OgreFramework.Instance.trayMgr.showCursor("AirRaidRedSea/UI/Cursor/Icon");
+
             SoundManager.Instance.PlayLoop("AirRaidRedSea-MainTheme.mp3");
 
             sceneMgr = OgreFramework.Instance.root.CreateSceneManager(Mogre.SceneType.ST_GENERIC);

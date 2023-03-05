@@ -43,20 +43,17 @@ material AirRaidRedSea/UI/Button/Down : SdkTrays/Base
     }
 }
 
-material Template/Red50
- {
-   technique
-   {
-     pass
-     {
-       scene_blend alpha_blend
-       depth_write off
-       
-       texture_unit
-       {
-         colour_op_ex source1 src_manual src_current 1 0 0
-         alpha_op_ex source1 src_manual src_current 0
-       }
-     }
-   }
- }
+material AirRaidRedSea/UI/Cursor/Icon
+{
+    technique
+    {
+        pass
+        {
+			scene_blend alpha_blend
+            texture_unit
+            {
+                texture UI-Aim.png
+            }
+        }
+    }
+}
