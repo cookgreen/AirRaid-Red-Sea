@@ -1,0 +1,62 @@
+material AirRaidRedSea/UI/Button/Up : SdkTrays/Base
+{
+    technique
+    {
+        pass
+        {
+			scene_blend alpha_blend
+            texture_unit
+            {
+                texture UI-Button.png
+            }
+        }
+    }
+}
+
+material AirRaidRedSea/UI/Button/Over : SdkTrays/Base
+{
+    technique
+    {
+        pass
+        {
+			scene_blend alpha_blend
+            texture_unit
+            {
+                texture UI-Button-Hover.png
+            }
+        }
+    }
+}
+
+material AirRaidRedSea/UI/Button/Down : SdkTrays/Base
+{
+    technique
+    {
+        pass
+        {
+			scene_blend alpha_blend
+            texture_unit
+            {
+                texture UI-Button-Selected.png
+            }
+        }
+    }
+}
+
+material Template/Red50
+ {
+   technique
+   {
+     pass
+     {
+       scene_blend alpha_blend
+       depth_write off
+       
+       texture_unit
+       {
+         colour_op_ex source1 src_manual src_current 1 0 0
+         alpha_op_ex source1 src_manual src_current 0
+       }
+     }
+   }
+ }

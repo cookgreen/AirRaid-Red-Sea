@@ -58,7 +58,14 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>AirRaidRedSea.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
+    <None Include="AirRaidRedSea.snk" />
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
@@ -71,8 +78,8 @@
     <Reference Include="Mogre-Procedural">
       <HintPath>..\Depends\Mogre-Procedural.dll</HintPath>
     </Reference>
-    <Reference Include="Mogre_Procedural.MogreBites">
-      <HintPath>..\Depends\Mogre_Procedural.MogreBites.dll</HintPath>
+    <Reference Include="MogreBites">
+      <HintPath>..\Depends\MogreBites.dll</HintPath>
     </Reference>
     <Reference Include="Mogre_Procedural.MogreBites.Addons">
       <HintPath>..\Depends\Mogre_Procedural.MogreBites.Addons.dll</HintPath>
@@ -95,12 +102,14 @@
     <Reference Include="OgreFramework">
       <HintPath>..\Depends\OgreFramework.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameState.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="MainGameApp.cs" />
     <Compile Include="MenuState.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AirRaidRedSea.ico" />
