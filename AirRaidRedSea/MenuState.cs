@@ -1,9 +1,11 @@
 ﻿using Mogre;
 using Mogre_Procedural.MogreBites;
 using MOIS;
+using NAudio.Wave;
 using org.ogre.framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +19,8 @@ namespace AirRaidRedSea
         public override void Enter()
         {
             FontManager.Singleton.GetByName("SdkTrays/Caption").Load();
+
+            SoundManager.Instance.PlayLoop("AirRaidRedSea-MainTheme.mp3");
 
             sceneMgr = OgreFramework.Instance.root.CreateSceneManager(Mogre.SceneType.ST_GENERIC);
             sceneMgr.AmbientLight = new ColourValue(0.7f, 0.7f, 0.7f);
@@ -35,6 +39,7 @@ namespace AirRaidRedSea
 
             var btnStart = OgreFramework.Instance.trayMgr.createButton(TrayLocation.TL_CENTER, "btnStart", "Start", 200, 40, 0, 0);
             var btnOptions = OgreFramework.Instance.trayMgr.createButton(TrayLocation.TL_CENTER, "btnOptions", "Options", 200, 40, 0, 0);
+            var btnCredit = OgreFramework.Instance.trayMgr.createButton(TrayLocation.TL_CENTER, "btnCredit", "Credit", 200, 40, 0, 0);
             var btnExit = OgreFramework.Instance.trayMgr.createButton(TrayLocation.TL_CENTER, "btnExit", "Exit", 200, 40, 0, 0);
 
             btnStart.UpMaterial = "AirRaidRedSea/UI/Button/Up";
@@ -46,6 +51,11 @@ namespace AirRaidRedSea
             btnOptions.DownMaterial = "AirRaidRedSea/UI/Button/Down";
             btnOptions.OverMaterial = "AirRaidRedSea/UI/Button/Over";
             btnOptions.FontColor = new ColourValue(1, 1, 1);
+
+            btnCredit.UpMaterial = "AirRaidRedSea/UI/Button/Up";
+            btnCredit.DownMaterial = "AirRaidRedSea/UI/Button/Down";
+            btnCredit.OverMaterial = "AirRaidRedSea/UI/Button/Over";
+            btnCredit.FontColor = new ColourValue(1, 1, 1);
 
             btnExit.UpMaterial = "AirRaidRedSea/UI/Button/Up";
             btnExit.DownMaterial = "AirRaidRedSea/UI/Button/Down";
@@ -83,13 +93,14 @@ namespace AirRaidRedSea
 
         public override void Exit()
         {
-
+            SoundManager.Instance.StopCurrentLoop();
         }
 
         public override void Update(double timeSinceLastFrame)
         {
             if(isQuit)
             {
+                SoundManager.Instance.StopCurrentLoop();
                 shutdown();
                 return;
             }
@@ -97,7 +108,19 @@ namespace AirRaidRedSea
 
         public override void buttonHit(Button button)
         {
-            base.buttonHit(button);
+            SoundManager.Instance.PlaySound("button-click.mp3");
+
+            switch(button.getName())
+            {
+                case "btnExit":
+                    isQuit = true;
+                    break;
+            }
+        }
+
+        public override void buttonOver(Button button)
+        {
+            SoundManager.Instance.PlaySound("button-hover.mp3");
         }
 
         public bool keyPressed(KeyEvent keyEventRef)
