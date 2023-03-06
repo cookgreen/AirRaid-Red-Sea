@@ -1,4 +1,5 @@
 ﻿using Mogre;
+using MOIS;
 using MyGUI.Sharp;
 using System;
 using System.Collections.Generic;
@@ -9,16 +10,56 @@ using System.Threading.Tasks;
 
 namespace AirRaidRedSea
 {
+    public class GameLevel
+    {
+        private int levelNumber;
+        private GameLevelXml levelData;
+        private Camera camera;
+
+        public int LevelNumber 
+        {
+            get { return levelNumber; }
+        }
+
+        public GameLevel(int levelNumber, GameLevelXml levelData, Camera camera) 
+        {
+            this.levelNumber = levelNumber;
+            this.levelData = levelData;
+            this.camera = camera;
+        }
+
+        public void Start()
+        {
+            //Create Enemeies
+        }
+
+        public void Stop()
+        {
+            //Clear the scene
+        }
+    }
+
     public class AirRaidRedSeaGame
     {
+        private Camera camera;
+        private SceneManager sceneManager;
+        private GameLevel currentLevel;
+        private GameLevelsXml gameLevelDataList;
         private Player player;
+
+        public AirRaidRedSeaGame(GameLevelsXml gameLevelDataList)
+        {
+            this.gameLevelDataList= gameLevelDataList;
+        }
 
         public void Setup(Camera camera)
         {
-            AmmoManager.Instance.InitAmmo(300);
+            this.camera = camera;
 
             setupUI();
-            createScene();
+            setupScene();
+            setupGame();
+            switchNextLevel();
         }
 
         private void setupUI()
@@ -49,19 +90,89 @@ namespace AirRaidRedSea
             txtScore.FontHeight = 30;
             txtScore.TextAlign = Align.Center;
             txtScore.SetCaption("0");
+        }
+
+        private void setupScene()
+        {
+            sceneManager = camera.SceneManager;
+            //Create Ship
+
+            //Create AAGun
+        }
+
+        private void setupGame()
+        {
+            AmmoManager.Instance.InitAmmo(300);
 
             player = new Player("Player1");
             player.UI.PlayerAmmoUI.Init();
+
+            player.PlayerWinFullGame += Player_PlayerWinFullGame;
+            player.PlayerGameOver += Player_PlayerGameOver;
+            player.PlayerWinThisRound += Player_PlayerWinThisRound;
         }
 
-        private void createScene()
+        private void switchNextLevel()
         {
+            int currentLevelNumber;
+            if (currentLevel != null)
+            {
+                currentLevelNumber = currentLevel.LevelNumber;
+                currentLevel.Stop();
+                currentLevelNumber++;
+            }
+            else
+            {
+                currentLevelNumber = 1;
+            }
+            currentLevel = new GameLevel(currentLevelNumber, gameLevelDataList.Levels[currentLevelNumber - 1], camera);
+            currentLevel.Start();
+        }
+
+        private void Player_PlayerWinThisRound()
+        {
+            switchNextLevel();
+        }
+
+        private void Player_PlayerGameOver()
+        {
+            //Show the Mission failed Screen
+            //Change to MainMenu
+        }
+
+        private void Player_PlayerWinFullGame()
+        {
+            //Show the Victory Screen
+            //Change to Credit
+        }
+
+        public void InjectMouseMove(MouseEvent evet)
+        {
+
+        }
+
+        public void InjectMousePress(MouseEvent evet, MouseButtonID id) 
+        { 
+            
+        }
+
+        public void InjectMouseDown(MouseEvent evet, MouseButtonID id)
+        {
+
+        }
+
+        public void InjectKeyDown(KeyEvent evt)
+        {
+
+        }
+
+        public void InjectKeyUp(KeyEvent evt)
+        {
+
         }
 
         public void Update(double timeSinceLastFrame)
         {
-            AmmoManager.Instance.RemoveAmmo(1);
-            Thread.Sleep(100);
         }
     }
 }

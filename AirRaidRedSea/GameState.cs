@@ -21,7 +21,7 @@ namespace AirRaidRedSea
 
         public GameState()
         {
-            game = new AirRaidRedSeaGame();
+            game = new AirRaidRedSeaGame(UserData as GameLevelsXml);
         }
 
         public override void Enter()
@@ -80,36 +80,49 @@ namespace AirRaidRedSea
             game.Update(timeSinceLastFrame);
         }
 
-        public bool keyPressed(KeyEvent keyEventRef)
+        public bool keyPressed(KeyEvent evt)
         {
+            game.InjectKeyDown(evt);
+
             if (OgreFramework.Instance.keyboard.IsKeyDown(MOIS.KeyCode.KC_ESCAPE))
             {
                 isQuit = true;
                 return true;
             }
 
-            OgreFramework.Instance.KeyPressed(keyEventRef);
+            OgreFramework.Instance.KeyPressed(evt);
             return true;
         }
-        public bool keyReleased(KeyEvent keyEventRef)
+        public bool keyReleased(KeyEvent evt)
         {
-            OgreFramework.Instance.KeyReleased(keyEventRef);
+            game.InjectKeyUp(evt);
+
+            OgreFramework.Instance.KeyReleased(evt);
             return true;
         }
 
         public bool mouseMoved(MouseEvent evt)
         {
             if (OgreFramework.Instance.trayMgr.injectMouseMove(evt)) return true;
+
+            game.InjectMouseMove(evt);
+
             return true;
         }
         public bool mousePressed(MouseEvent evt, MouseButtonID id)
         {
             if (OgreFramework.Instance.trayMgr.injectMouseDown(evt, id)) return true;
+
+            game.InjectMousePress(evt, id);
+
             return true;
         }
         public bool mouseReleased(MouseEvent evt, MouseButtonID id)
         {
             if (OgreFramework.Instance.trayMgr.injectMouseUp(evt, id)) return true;
+
+            game.InjectMouseDown(evt, id);
+
             return true;
         }
     }

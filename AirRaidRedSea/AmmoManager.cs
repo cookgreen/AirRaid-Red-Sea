@@ -16,9 +16,11 @@ namespace AirRaidRedSea
     {
         private int ammoNumber;
         private bool isInited;
+        private bool isEmpty;
 
         public int CurrentAmmoNumber { get { return ammoNumber; } }
 
+        public event Action AmmoEmptyed;
         public event Action<AmmoChangeType> AmmoChanged;
 
         private static AmmoManager instance;
@@ -38,6 +40,7 @@ namespace AirRaidRedSea
             {
                 this.ammoNumber= ammoNumber;
                 isInited = true;
+                isEmpty = false;
             }
         }
 
@@ -49,8 +52,16 @@ namespace AirRaidRedSea
 
         public void RemoveAmmo(int decreaseNumber)
         {
-            ammoNumber -= decreaseNumber;
-            AmmoChanged?.Invoke(AmmoChangeType.Remove);
+            if (ammoNumber == 0)
+            {
+                isEmpty = true;
+                AmmoEmptyed?.Invoke();
+            }
+            else
+            {
+                ammoNumber -= decreaseNumber;
+                AmmoChanged?.Invoke(AmmoChangeType.Remove);
+            }
         }
 
         public void ChangeAmmo(int newAmmoNumber)

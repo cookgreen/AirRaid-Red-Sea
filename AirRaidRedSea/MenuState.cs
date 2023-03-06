@@ -16,7 +16,7 @@ namespace AirRaidRedSea
     public class MenuState : AppState
     {
         private bool isQuit;
-        private List<GameLevelXml> levels;
+        private GameLevelsXml levels;
 
         public override void Enter()
         {
@@ -41,10 +41,10 @@ namespace AirRaidRedSea
 
             createBackground("AirraidMainScreen.png");
 
-            var btnStart = OgreFramework.Instance.trayMgr.createButton(TrayLocation.TL_CENTER, "btnStart", "Start", 200, 40, 0, 0);
-            var btnOptions = OgreFramework.Instance.trayMgr.createButton(TrayLocation.TL_CENTER, "btnOptions", "Options", 200, 40, 0, 0);
-            var btnCredit = OgreFramework.Instance.trayMgr.createButton(TrayLocation.TL_CENTER, "btnCredit", "Credit", 200, 40, 0, 0);
-            var btnExit = OgreFramework.Instance.trayMgr.createButton(TrayLocation.TL_CENTER, "btnExit", "Exit", 200, 40, 0, 0);
+            var btnStart = OgreFramework.Instance.trayMgr.createButton(TrayLocation.TL_CENTER, "btnStart", "Start New Game", 300, 50, 0, 0);
+            var btnOptions = OgreFramework.Instance.trayMgr.createButton(TrayLocation.TL_CENTER, "btnLoad", "Load Game", 300, 50, 0, 0);
+            var btnCredit = OgreFramework.Instance.trayMgr.createButton(TrayLocation.TL_CENTER, "btnCredit", "Credit", 300, 50, 0, 0);
+            var btnExit = OgreFramework.Instance.trayMgr.createButton(TrayLocation.TL_CENTER, "btnExit", "Exit", 300, 50, 0, 0);
 
             btnStart.UpMaterial = "AirRaidRedSea/UI/Button/Up";
             btnStart.DownMaterial = "AirRaidRedSea/UI/Button/Down";
@@ -81,7 +81,7 @@ namespace AirRaidRedSea
             DataStreamPtr levelsDataStream = ResourceGroupManager.Singleton.OpenResource("levels.xml");
             Stream levelsStream = Helper.DataPtrToStream(levelsDataStream);
             
-            levels = GameLevelsXml.Load(levelsStream).Levels;
+            levels = GameLevelsXml.Load(levelsStream);
             
             levelsStream.Close();
         }
@@ -135,7 +135,9 @@ namespace AirRaidRedSea
             switch(button.getName())
             {
                 case "btnStart":
-                    changeAppState(findByName("GameState"));
+                    AppState appState = findByName("GameState");
+                    appState.UserData = levels;
+                    changeAppState(appState);
                     break;
                 case "btnExit":
                     isQuit = true;
