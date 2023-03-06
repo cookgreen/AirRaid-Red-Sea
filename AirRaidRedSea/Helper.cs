@@ -6,6 +6,7 @@ using System.IO;
 using Mogre;
 using System.Runtime.InteropServices;
 using System.Drawing;
+using MyGUI.Sharp;
 
 namespace AirRaidRedSea
 {
@@ -86,6 +87,7 @@ namespace AirRaidRedSea
 						ptr.Read(bufferPtr, (uint)buffer.Length);
 					}
 				}
+				ptr.Close();
 				MemoryStream memoryStream = new MemoryStream(buffer);
 				return memoryStream;
 			}
@@ -253,5 +255,49 @@ namespace AirRaidRedSea
 
 			return indics.ToArray();
 		}
-	}
+
+        public static void SnapToParent(Widget _child, Align align)
+        {
+			IntCoord coord = _child.Coord;
+			IntSize size = _child.GetParentSize();
+
+			if ((align & Align.HStretch) == Align.HStretch)
+			{
+			    coord.left = 0;
+			    coord.width = size.width;
+			}
+			else if ((align & Align.Left) == Align.Left)
+			{
+			    coord.left = 0;
+			}
+			else if ((align & Align.Right) == Align.Right)
+			{
+			    coord.left = size.width - coord.width;
+			}
+			else
+			{
+			    coord.left = (size.width - coord.width) / 2;
+			}
+
+			if ((align & Align.VStretch) == Align.VStretch)
+			{
+				coord.top = 0;
+				coord.height = size.height;
+			}
+			else if ((align & Align.Top) == Align.Top)
+			{
+				coord.top = 0;
+			}
+			else if ((align & Align.Bottom) == Align.Bottom)
+			{
+				coord.top = size.height - coord.height;
+			}
+			else
+			{
+				coord.top = (size.height - coord.height) / 2;
+			}
+
+			_child.SetCoord(coord);
+        }
+    }
 }

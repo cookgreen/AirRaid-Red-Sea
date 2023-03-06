@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Levels>
+  <Level scene="level1.scene" ambient_music="level1.mp3">
+    <AircraftNumber>20</AircraftNumber>
+    <AircraftFighter>15</AircraftFighter>
+    <AircraftBomber>5</AircraftBomber>
+    <AircraftTorpedo>0</AircraftTorpedo>
+    <AircraftAssult>0</AircraftAssult>
+    <AircraftScout>1</AircraftScout>
+  </Level>
+  <Level scene="level2.scene" ambient_music="level2.mp3">
+    <AircraftNumber>30</AircraftNumber>
+    <AircraftFighter>20</AircraftFighter>
+    <AircraftBomber>10</AircraftBomber>
+    <AircraftTorpedo>0</AircraftTorpedo>
+    <AircraftAssult>0</AircraftAssult>
+    <AircraftScout>1</AircraftScout>
+  </Level>
+  <Level scene="level3.scene" ambient_music="level3.mp3">
+    <AircraftNumber>35</AircraftNumber>
+    <AircraftFighter>25</AircraftFighter>
+    <AircraftBomber>10</AircraftBomber>
+    <AircraftTorpedo>0</AircraftTorpedo>
+    <AircraftAssult>0</AircraftAssult>
+    <AircraftScout>1</AircraftScout>
+  </Level>
+</Levels>

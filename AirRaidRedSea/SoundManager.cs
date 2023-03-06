@@ -1,5 +1,7 @@
 ﻿using Mogre;
+using NAudio.Vorbis;
 using NAudio.Wave;
+using NVorbis;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,12 +15,7 @@ namespace AirRaidRedSea
     public class SoundManager
     {
         private WaveOut waveOut;
-        private SoundPlayer currentSoundPlayer;
-
-        public SoundPlayer CurrentSoundPlayer
-        {
-            get { return currentSoundPlayer; }
-        }
+        private Dictionary<string, SoundPlayer> soundPlayers;
 
         private static SoundManager instance;
         public static SoundManager Instance
@@ -34,6 +31,7 @@ namespace AirRaidRedSea
         public SoundManager() 
         {
             waveOut = new WaveOut();
+            soundPlayers = new Dictionary<string, SoundPlayer>();
         }
 
         public void PlaySound(string soundFileName)
@@ -46,26 +44,37 @@ namespace AirRaidRedSea
             }
         }
 
-        public void PlayLoop(string musicFileName)
+        public void PlayLoop(string musicFileName, string name = "")
         {
-            if (currentSoundPlayer != null)
-            {
-                currentSoundPlayer.Stoploop();
-            }
-
             IWaveProvider waveProvider = getWaveProvider(musicFileName);
             if (waveProvider != null)
             {
-                currentSoundPlayer = new SoundPlayer(waveProvider);
-                currentSoundPlayer.Playloop();
+                var soundPlayer = new SoundPlayer(waveProvider);
+                if (!string.IsNullOrEmpty(name))
+                {
+                    soundPlayers[name] = soundPlayer;
+                }
+                else
+                {
+                    soundPlayers[musicFileName] = soundPlayer;
+                }
             }
         }
 
-        public void StopCurrentLoop()
+        public void StopCurrentLoop(string name = "")
         {
-            if (currentSoundPlayer != null)
+            if (soundPlayers.Count == 0)
+                return;
+
+            if(!string.IsNullOrEmpty(name))
             {
-                currentSoundPlayer.Stoploop();
+                soundPlayers[name].Stoploop();
+                soundPlayers.Remove(name);
+            }
+            else
+            {
+                soundPlayers.ElementAt(0).Value.Stoploop();
+                soundPlayers.Remove(soundPlayers.ElementAt(0).Key);
             }
         }
 
@@ -82,6 +91,15 @@ namespace AirRaidRedSea
                 case ".mp3":
                     Mp3FileReader mp3FileReader = new Mp3FileReader(soundStream);
                     return mp3FileReader;
+                case ".wave":
+                    WaveFileReader waveFileReader= new WaveFileReader(soundStream);
+                    return waveFileReader;
+                case ".aiff":
+                    AiffFileReader aiffFileReader = new AiffFileReader(soundStream);
+                    return aiffFileReader;
+                case ".ogg":
+                    VorbisWaveReader vorbisWaveReader = new VorbisWaveReader(soundStream);
+                    return vorbisWaveReader;
                 default: 
                     return null;
             }

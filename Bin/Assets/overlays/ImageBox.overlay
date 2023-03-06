@@ -1,0 +1,84 @@
+template container Panel(UI/ImageBox)
+{
+	metrics_mode pixels
+	material SdkTrays/TextBox
+	horz_align center
+	uv_coords 0.4 0.4 0.6 0.6
+	
+	border_material SdkTrays/TextBox
+	border_size 13 13 13 13
+	border_topleft_uv     0.0 0.0 0.4 0.4
+	border_top_uv         0.4 0.0 0.6 0.4
+	border_topright_uv    0.6 0.0 1.0 0.4
+	border_left_uv        0.0 0.4 0.4 0.6
+	border_right_uv       0.6 0.4 1.0 0.6
+	border_bottomleft_uv  0.0 0.6 0.4 1.0
+	border_bottom_uv      0.4 0.6 0.6 1.0
+	border_bottomright_uv 0.6 0.6 1.0 1.0
+	
+	container BorderPanel(TextBoxCaptionBar)
+	{
+		metrics_mode pixels
+		material SdkTrays/MiniTray
+		height 30
+		top 2
+		left 2
+		uv_coords 0.375 0.375 0.625 0.625
+		
+		border_material SdkTrays/MiniTray
+		border_size 12 12 12 12
+		border_topleft_uv     0.000 0.000 0.375 0.375
+		border_top_uv         0.375 0.000 0.625 0.375
+		border_topright_uv    0.625 0.000 1.000 0.375
+		border_left_uv        0.000 0.375 0.375 0.625
+		border_right_uv       0.625 0.375 1.000 0.625
+		border_bottomleft_uv  0.000 0.625 0.375 1.000
+		border_bottom_uv      0.375 0.625 0.625 1.000
+		border_bottomright_uv 0.625 0.625 1.000 1.000
+
+		element TextArea(TextBoxCaption)
+		{
+			metrics_mode pixels
+			horz_align center
+			alignment center
+			top 8
+			font_name SdkTrays/Caption
+			char_height 15
+			space_width 7
+			colour 0 0 0
+		}
+	}
+
+	element Panel(CursorImage)
+	{
+        metrics_mode pixels
+        material SdkTrays/Cursor
+        width 32
+        height 32
+	}
+
+	container BorderPanel(TextBoxScrollTrack)
+	{
+        metrics_mode pixels
+        material SdkTrays/ScrollTrack
+        width 12
+		horz_align right
+		left -23
+		uv_coords 0.0 0.31 1.0 0.69
+		
+		border_material SdkTrays/ScrollTrack
+		border_size 0 0 10 10
+		border_top_uv    0.0 0.0 1.0 0.31
+		border_bottom_uv 0.0 0.69 1.0 1.0
+        
+		element Panel(TextBoxScrollHandle)
+		{
+			metrics_mode pixels
+			material SdkTrays/Handle
+			horz_align center
+			left -8
+			width 16
+			height 16
+		}
+	}
+}

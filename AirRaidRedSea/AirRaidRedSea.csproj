@@ -80,7 +80,8 @@
     <Reference Include="Mogre-Procedural">
       <HintPath>..\Depends\Mogre-Procedural.dll</HintPath>
     </Reference>
-    <Reference Include="MogreBites">
+    <Reference Include="MogreBites, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Depends\MogreBites.dll</HintPath>
     </Reference>
     <Reference Include="Mogre_Procedural.MogreBites.Addons">
@@ -106,18 +107,40 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AirRaidRedSeaGame.cs" />
+    <Compile Include="AmmoManager.cs" />
+    <Compile Include="Export.cs" />
+    <Compile Include="GameLevelXml.cs" />
+    <Compile Include="GameObject.cs" />
+    <Compile Include="GameObjectController.cs" />
+    <Compile Include="GameObjectInfo.cs" />
+    <Compile Include="GameObjectManager.cs" />
+    <Compile Include="NavalAAGun.cs" />
+    <Compile Include="Aircraft.cs" />
+    <Compile Include="AircraftController.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="MainGame.cs" />
     <Compile Include="MainGameApp.cs" />
     <Compile Include="MenuState.cs" />
+    <Compile Include="NavalAAGunController.cs" />
+    <Compile Include="Player.cs" />
+    <Compile Include="PlayerAmmoUI.cs" />
+    <Compile Include="PlayerUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SoundManager.cs" />
+    <Compile Include="NavalWarship.cs" />
+    <Compile Include="NavalWarshipController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AirRaidRedSea.ico" />
+    <Content Include="levels.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)levels.xml" "$(TargetDir)Assets/AirRaidRedSea/Data" /V /Y</PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -6,3 +6,5 @@ Bin/*.exe
 Bin/*.pdb
 Bin/*.config
 Bin/*.manifest
+
+Bin/*.xml

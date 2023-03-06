@@ -6,6 +6,7 @@ using org.ogre.framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace AirRaidRedSea
     public class MenuState : AppState
     {
         private bool isQuit;
+        private List<GameLevelXml> levels;
 
         public override void Enter()
         {
@@ -69,6 +71,19 @@ namespace AirRaidRedSea
             OgreFramework.Instance.mouse.MouseReleased += mouseReleased;
             OgreFramework.Instance.keyboard.KeyPressed += keyPressed;
             OgreFramework.Instance.keyboard.KeyReleased += keyReleased;
+
+            loadLevels();
+        }
+
+        private void loadLevels()
+        {
+            //Read level.xml
+            DataStreamPtr levelsDataStream = ResourceGroupManager.Singleton.OpenResource("levels.xml");
+            Stream levelsStream = Helper.DataPtrToStream(levelsDataStream);
+            
+            levels = GameLevelsXml.Load(levelsStream).Levels;
+            
+            levelsStream.Close();
         }
 
         private void createBackground(string textureName)
@@ -95,6 +110,11 @@ namespace AirRaidRedSea
 
         public override void Exit()
         {
+            sceneMgr.DestroyCamera(camera);
+            if (sceneMgr != null)
+            {
+                OgreFramework.Instance.root.DestroySceneManager(sceneMgr);
+            }
             SoundManager.Instance.StopCurrentLoop();
         }
 
@@ -114,6 +134,9 @@ namespace AirRaidRedSea
 
             switch(button.getName())
             {
+                case "btnStart":
+                    changeAppState(findByName("GameState"));
+                    break;
                 case "btnExit":
                     isQuit = true;
                     break;
