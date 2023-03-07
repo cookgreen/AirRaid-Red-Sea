@@ -9,8 +9,8 @@ namespace AirRaidRedSea
 {
     public class NavalWarshipController : GameObjectController
     {
-        public NavalWarshipController(Camera camera, string meshName, string meshMaterialName) : 
-            base(camera, meshName, meshMaterialName)
+        public NavalWarshipController(Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode) : 
+            base(camera, meshName, meshMaterialName, parentSceneNode)
         {
         }
     }

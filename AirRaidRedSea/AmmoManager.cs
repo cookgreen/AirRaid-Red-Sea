@@ -18,7 +18,14 @@ namespace AirRaidRedSea
         private bool isInited;
         private bool isEmpty;
 
-        public int CurrentAmmoNumber { get { return ammoNumber; } }
+        public bool IsEmpty
+        {
+            get { return isEmpty; }
+        }
+        public int CurrentAmmoNumber 
+        { 
+            get { return ammoNumber; } 
+        }
 
         public event Action AmmoEmptyed;
         public event Action<AmmoChangeType> AmmoChanged;

@@ -16,7 +16,6 @@ namespace AirRaidRedSea
     public class GameState : AppState
     {
         private AirRaidRedSeaGame game;
-        private int currentLevel = 1;
         private bool isQuit = false;
 
         public GameState()
@@ -77,6 +76,12 @@ namespace AirRaidRedSea
 
         public override void Update(double timeSinceLastFrame)
         {
+            if(isQuit)
+            {
+                shutdown();
+                return;
+            }
+
             game.Update(timeSinceLastFrame);
         }
 
@@ -113,7 +118,7 @@ namespace AirRaidRedSea
         {
             if (OgreFramework.Instance.trayMgr.injectMouseDown(evt, id)) return true;
 
-            game.InjectMousePress(evt, id);
+            game.InjectMouseDown(evt, id);
 
             return true;
         }
@@ -121,7 +126,7 @@ namespace AirRaidRedSea
         {
             if (OgreFramework.Instance.trayMgr.injectMouseUp(evt, id)) return true;
 
-            game.InjectMouseDown(evt, id);
+            game.InjectMouseUp(evt, id);
 
             return true;
         }

@@ -20,22 +20,23 @@ namespace AirRaidRedSea
         private NavalWarshipInfo shipInfo;
         private Camera camera;
         private List<NavalWarshipOperatorSlot> slots;
-        private bool IsFull
+
+        public bool IsFull
         {
             get { return slots.Where(o => o.IsUsed).Count() == slots.Count; }
-        }
-        
+        }      
         public List<NavalWarshipOperatorSlot> Slots
         {
             get { return slots; }
         }
 
-        public NavalWarship(GameObjectInfo shipInfo, Camera camera, string meshName, string meshMaterialName) : 
-            base(camera, meshName, meshMaterialName)
+        public NavalWarship(GameObjectInfo shipInfo, Camera camera, string meshName, string meshMaterialName, SceneNode parentNode) : 
+            base(shipInfo, camera, meshName, meshMaterialName)
         {
             this.camera = camera;
             this.shipInfo = shipInfo as NavalWarshipInfo;
-            controller = new NavalWarshipController(camera, meshName, meshMaterialName);
+            controller = new NavalWarshipController(camera, meshName, meshMaterialName, parentNode);
+            slots = new List<NavalWarshipOperatorSlot>();
         }
 
         public void Initization()
@@ -47,6 +48,22 @@ namespace AirRaidRedSea
                 slots.Add(slot);
             }
             controller.Initization();
+            SwitchSlot();
+        }
+
+        public void SwitchSlot()
+        {
+            if (!IsFull)
+            {
+                var unusedSlots = slots.Where(o => o.IsUsed);
+                var unusedRandomSlot = unusedSlots.Random();
+                unusedRandomSlot.Switch();
+            }
+        }
+
+        public void DetachCamera()
+        {
+            controller.DetachCamera();
         }
     }
 
@@ -84,12 +101,24 @@ namespace AirRaidRedSea
             this.ship = ship;
             this.position = position;
             slotIndex = index;
+            isUsed = false;
         }
 
         public void Initization(Camera camera)
         {
-            navalAAGun = new NavalAAGun(camera, "NavalAAGun.mesh", "NavalAAGun");
+            NavalAAGunInfo navalAAGunInfo = new NavalAAGunInfo();
+            navalAAGunInfo.ShootSpeed = 30;
+            navalAAGunInfo.Ammo = 300;
+            
+            navalAAGun = new NavalAAGun(navalAAGunInfo, camera, "NavalAAGun.mesh", "NavalAAGun", ship.Controller.SceneNode);
             ship.AttachGameObject(navalAAGun);
+        }
+
+        public void Switch()
+        {
+            ship.DetachCamera();
+            navalAAGun.AttachCamera();
+            GameObjectManager.Instance.PlayerControlGameObjectChanged(navalAAGun, "NavalAAGun");
         }
     }
 }

@@ -59,6 +59,11 @@ namespace AirRaidRedSea
             get { return name; }
         }
 
+        public PlayerHitpoint PlayerHitpoint
+        {
+            get { return playerHitpoint; }
+        }
+
         public PlayerUI UI
         {
             get { return playerUI; }

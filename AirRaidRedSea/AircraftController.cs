@@ -9,8 +9,8 @@ namespace AirRaidRedSea
 {
     public class AircraftController : GameObjectController
     {
-        public AircraftController(Camera camera, string meshName, string meshMaterialName) : 
-            base(camera, meshName, meshMaterialName)
+        public AircraftController(Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode) : 
+            base(camera, meshName, meshMaterialName, parentSceneNode)
         {
 
         }

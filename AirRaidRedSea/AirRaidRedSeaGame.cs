@@ -10,34 +10,6 @@ using System.Threading.Tasks;
 
 namespace AirRaidRedSea
 {
-    public class GameLevel
-    {
-        private int levelNumber;
-        private GameLevelXml levelData;
-        private Camera camera;
-
-        public int LevelNumber 
-        {
-            get { return levelNumber; }
-        }
-
-        public GameLevel(int levelNumber, GameLevelXml levelData, Camera camera) 
-        {
-            this.levelNumber = levelNumber;
-            this.levelData = levelData;
-            this.camera = camera;
-        }
-
-        public void Start()
-        {
-            //Create Enemeies
-        }
-
-        public void Stop()
-        {
-            //Clear the scene
-        }
-    }
 
     public class AirRaidRedSeaGame
     {
@@ -49,7 +21,7 @@ namespace AirRaidRedSea
 
         public AirRaidRedSeaGame(GameLevelsXml gameLevelDataList)
         {
-            this.gameLevelDataList= gameLevelDataList;
+            this.gameLevelDataList = gameLevelDataList;
         }
 
         public void Setup(Camera camera)
@@ -110,6 +82,22 @@ namespace AirRaidRedSea
             player.PlayerWinFullGame += Player_PlayerWinFullGame;
             player.PlayerGameOver += Player_PlayerGameOver;
             player.PlayerWinThisRound += Player_PlayerWinThisRound;
+
+            NavalWarshipInfo navalWarshipInfo = new NavalWarshipInfo();
+            navalWarshipInfo.SlotPosition = new List<Mogre.Vector3>
+            {
+                new Mogre.Vector3(10, 0, 0),
+                new Mogre.Vector3(20, 0, 0),
+                new Mogre.Vector3(0, 0, 10),
+                new Mogre.Vector3(0, 0, 20),
+            };
+            navalWarshipInfo.Speed = 20;
+            navalWarshipInfo.Hitpoint = player.PlayerHitpoint.CurrentHitpointPercent;
+            navalWarshipInfo.SlotNumber = 4;
+
+            GameObjectManager.Instance.CreateGameObject("NavalWarship", camera, 
+                "NavalWarship.mesh", "NavalWarship", 
+                navalWarshipInfo, camera.SceneManager.RootSceneNode);
         }
 
         private void switchNextLevel()
@@ -146,33 +134,96 @@ namespace AirRaidRedSea
             //Change to Credit
         }
 
-        public void InjectMouseMove(MouseEvent evet)
+        public void InjectMouseMove(MouseEvent evt)
         {
-
+            currentLevel.InjectMouseMove(evt);
         }
 
-        public void InjectMousePress(MouseEvent evet, MouseButtonID id) 
+        public void InjectMouseDown(MouseEvent evt, MouseButtonID id) 
         { 
-            
+            currentLevel.InjectMouseDown(evt, id);
         }
 
-        public void InjectMouseDown(MouseEvent evet, MouseButtonID id)
+        public void InjectMouseUp(MouseEvent evt, MouseButtonID id)
         {
-
+            currentLevel.InjectMouseUp(evt, id);
         }
 
         public void InjectKeyDown(KeyEvent evt)
         {
-
+            currentLevel.InjectKeyDown(evt);
         }
 
         public void InjectKeyUp(KeyEvent evt)
         {
-
+            currentLevel.InjectKeyUp(evt);
         }
 
         public void Update(double timeSinceLastFrame)
         {
+        }
+    }
+
+    public class GameLevel
+    {
+        private int levelNumber;
+        private GameLevelXml levelData;
+        private Camera camera;
+        private GameObject currentControlledObject;
+
+        public int LevelNumber
+        {
+            get { return levelNumber; }
+        }
+
+        public GameLevel(int levelNumber, GameLevelXml levelData, Camera camera)
+        {
+            this.levelNumber = levelNumber;
+            this.levelData = levelData;
+            this.camera = camera;
+        }
+
+        public void Start()
+        {
+            GameObjectManager.Instance.OnPlayerControlGameObjectChanged += PlayerControlGameObjectChanged;
+
+            //Create Enemeies
+        }
+
+        public void InjectMouseMove(MouseEvent evt)
+        {
+            currentControlledObject.InjectMouseMove(evt);
+        }
+
+        public void InjectMouseDown(MouseEvent evt, MouseButtonID id)
+        {
+            currentControlledObject.InjectMouseDown(evt, id);
+        }
+
+        public void InjectMouseUp(MouseEvent evt, MouseButtonID id)
+        {
+            currentControlledObject.InjectMouseUp(evt, id);
+        }
+
+        public void InjectKeyDown(KeyEvent evt)
+        {
+            currentControlledObject.InjectKeyDown(evt);
+        }
+
+        public void InjectKeyUp(KeyEvent evt)
+        {
+            currentControlledObject.InjectKeyDown(evt);
+        }
+
+        private void PlayerControlGameObjectChanged(GameObject gameObject, string gameObjectType)
+        {
+            currentControlledObject = gameObject;
+        }
+
+        public void Stop()
+        {
+            //Clear the scene
+            currentControlledObject.Destroy();
         }
     }
 }

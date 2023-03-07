@@ -1,4 +1,5 @@
 ﻿using Mogre;
+using MOIS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,12 @@ namespace AirRaidRedSea
             get { return controller; }
         }
 
-        public GameObject(Camera camera, string meshName, string meshMaterialName, SceneNode paretSceneNode = null)
+        public GameObject(GameObjectInfo gameObjectInfo, Camera camera, string meshName, string meshMaterialName, SceneNode paretSceneNode = null)
         {
             id = Guid.NewGuid().ToString();
             this.meshName = meshName;
             this.meshMaterialName = meshMaterialName;
-            controller = new GameObjectController(camera, meshName, meshMaterialName);
+            controller = new GameObjectController(camera, meshName, meshMaterialName, paretSceneNode);
             attachedGameObjects = new List<GameObject>();
         }
 
@@ -33,6 +34,36 @@ namespace AirRaidRedSea
         {
             controller.SceneNode.AddChild(gameObject.Controller.SceneNode);
             attachedGameObjects.Add(gameObject);
+        }
+
+        public void InjectMouseMove(MouseEvent evt)
+        {
+            controller.InjectMouseMove(evt);
+        }
+
+        public void InjectMouseDown(MouseEvent evt, MouseButtonID id)
+        {
+            controller.InjectMouseDown(evt, id);
+        }
+
+        public void InjectMouseUp(MouseEvent evt, MouseButtonID id)
+        {
+            controller.InjectMouseUp(evt, id);
+        }
+
+        public void InjectKeyDown(KeyEvent evt)
+        {
+            controller.InjectKeyDown(evt);
+        }
+
+        public void InjectKeyUp(KeyEvent evt)
+        {
+            controller.InjectKeyUp(evt);
+        }
+
+        public void Destroy()
+        {
+            controller.Destroy();
         }
     }
 }
