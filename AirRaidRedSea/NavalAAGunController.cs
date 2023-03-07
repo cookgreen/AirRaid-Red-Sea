@@ -14,15 +14,15 @@ namespace AirRaidRedSea
     {
         private SceneNode navalAAGunBarrelSceneNode;
 
-        private Vector2 mousePositionLast;
-        private Vector2 mousePositionNew;
-        private Vector2 mouseMoveDirection;
+        private Vector2 mousePosition;
 
         private float xAngle = 0;
         private float yAngle = 0;
 
-        private const float AAGUN_LIMIT_ANGLE_MAX = 90;
+        private float yRotateFloat = 0;
+
         private const float AAGUN_LIMIT_ANGLE_MIN = 0;
+        private const float AAGUN_LIMIT_ANGLE_MAX = 90;
 
         public NavalAAGunController(Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode, Vector3 initPosition)
             : base(camera, meshName, meshMaterialName, parentSceneNode, initPosition)
@@ -69,8 +69,7 @@ namespace AirRaidRedSea
 
         public override void InjectMouseMove(MouseEvent evt)
         {
-            mousePositionLast = mousePositionNew;
-            mousePositionNew = new Vector2(evt.state.X.abs, evt.state.Y.abs);
+            mousePosition = new Vector2(evt.state.X.rel, evt.state.Y.rel);
         }
 
         public override void Update(double timeSinceLastFrame)
@@ -78,15 +77,18 @@ namespace AirRaidRedSea
             if (isUsing)
             {
                 camera.Position = cameraSceneNode.Position;
-                //camera.MoveRelative(new Mogre.Vector3(0, 0, (float)(70 + 80 * timeSinceLastFrame)));
 
-                mouseMoveDirection = mousePositionNew - mousePositionLast;
-
-                xAngle = mouseMoveDirection.x * -0.1f;
-                yAngle = mouseMoveDirection.y * -0.1f;
+                xAngle = mousePosition.x * -0.01f;
+                yAngle = mousePosition.y * -0.01f;
 
                 sceneNode.Yaw(new Radian(new Degree(xAngle)));
-                navalAAGunBarrelSceneNode.Pitch(new Radian(new Degree(yAngle)));
+
+                if (yRotateFloat <= AAGUN_LIMIT_ANGLE_MAX && yRotateFloat >= AAGUN_LIMIT_ANGLE_MIN)
+                {
+                    navalAAGunBarrelSceneNode.Pitch(new Radian(new Degree(yAngle)));
+                }
+
+                yRotateFloat += yAngle * -1;
             }
         }
     }

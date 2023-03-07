@@ -33,8 +33,8 @@ namespace AirRaidRedSea
             camera = sceneMgr.CreateCamera("GameCamera");
             camera.SetPosition(0, 0, 0);
             camera.LookAt(0, 0, 0);
-            camera.NearClipDistance = 0.01f;
-            camera.FarClipDistance = 1000;
+            camera.NearClipDistance = 0.1f;
+            camera.FarClipDistance = 0;
             camera.AspectRatio = OgreFramework.Instance.viewport.ActualWidth /
                 OgreFramework.Instance.viewport.ActualHeight;
             OgreFramework.Instance.viewport.Camera = camera;
