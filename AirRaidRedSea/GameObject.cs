@@ -21,13 +21,18 @@ namespace AirRaidRedSea
             get { return controller; }
         }
 
-        public GameObject(GameObjectInfo gameObjectInfo, Camera camera, string meshName, string meshMaterialName, SceneNode paretSceneNode = null)
+        public GameObject(GameObjectInfo gameObjectInfo, Camera camera, string meshName, string meshMaterialName, SceneNode paretSceneNode, Mogre.Vector3 initPosition)
         {
             id = Guid.NewGuid().ToString();
             this.meshName = meshName;
             this.meshMaterialName = meshMaterialName;
-            controller = new GameObjectController(camera, meshName, meshMaterialName, paretSceneNode);
+            controller = new GameObjectController(camera, meshName, meshMaterialName, paretSceneNode, initPosition);
             attachedGameObjects = new List<GameObject>();
+        }
+
+        public virtual void Initization()
+        {
+            controller.Initization();
         }
 
         public void AttachGameObject(GameObject gameObject)
@@ -64,6 +69,11 @@ namespace AirRaidRedSea
         public void Destroy()
         {
             controller.Destroy();
+        }
+
+        public void Update(double deltaTime)
+        {
+            controller.Update(deltaTime);
         }
     }
 }

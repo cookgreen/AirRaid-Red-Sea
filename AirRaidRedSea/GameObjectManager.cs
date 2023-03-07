@@ -31,20 +31,29 @@ namespace AirRaidRedSea
             string typeName, Camera camera, 
             string meshName, string meshMaterialName,
             GameObjectInfo gameObjectInfo,
-            SceneNode parentSceneNode)
+            SceneNode parentSceneNode, 
+            Vector3 initPosition)
         {
             GameObject gameObject = null;
 
             switch(typeName)
             {
                 case "Aircraft":
-                    gameObject = new Aircraft(gameObjectInfo, camera, meshName, meshMaterialName, parentSceneNode);
+                    gameObject = new Aircraft(gameObjectInfo, 
+                        camera, meshName, meshMaterialName, 
+                        parentSceneNode, initPosition);
                     break;
                 case "NavalWarship":
-                    gameObject = new NavalWarship(gameObjectInfo, camera, meshName, meshMaterialName, parentSceneNode);
+                    gameObject = new NavalWarship(gameObjectInfo, 
+                        camera, meshName, meshMaterialName, 
+                        parentSceneNode, initPosition);
                     break;
                 case "NavalAAGun":
-                    gameObject = new NavalAAGun(gameObjectInfo, camera, meshName, meshMaterialName, parentSceneNode);
+                    gameObject = new NavalAAGun(gameObjectInfo, 
+                        camera, meshName, meshMaterialName, 
+                        parentSceneNode, initPosition);
+                    break;
+                case "EnemyWarship":
                     break;
                 default:
                     break;

@@ -30,8 +30,8 @@ namespace AirRaidRedSea
 
             setupUI();
             setupScene();
-            setupGame();
             switchNextLevel();
+            setupGame();
         }
 
         private void setupUI()
@@ -67,9 +67,6 @@ namespace AirRaidRedSea
         private void setupScene()
         {
             sceneManager = camera.SceneManager;
-            //Create Ship
-
-            //Create AAGun
         }
 
         private void setupGame()
@@ -84,20 +81,29 @@ namespace AirRaidRedSea
             player.PlayerWinThisRound += Player_PlayerWinThisRound;
 
             NavalWarshipInfo navalWarshipInfo = new NavalWarshipInfo();
-            navalWarshipInfo.SlotPosition = new List<Mogre.Vector3>
+            navalWarshipInfo.SlotPositions = new List<Mogre.Vector3>
             {
-                new Mogre.Vector3(10, 0, 0),
-                new Mogre.Vector3(20, 0, 0),
-                new Mogre.Vector3(0, 0, 10),
-                new Mogre.Vector3(0, 0, 20),
+                new Mogre.Vector3(-4f, 1.5f, 1),
+                new Mogre.Vector3(-5, 2, 0),
+                new Mogre.Vector3(0, 2, 5),
+                new Mogre.Vector3(0, 2, -5),
+            };
+            navalWarshipInfo.OffsetPositions = new List<Mogre.Vector3>
+            {
+                new Mogre.Vector3(0, 0.6f, 0),
+                new Mogre.Vector3(0, 0, -2.1459f),
+                new Mogre.Vector3(0, 0, -2.1459f),
+                new Mogre.Vector3(0, 0, -2.1459f),
             };
             navalWarshipInfo.Speed = 20;
             navalWarshipInfo.Hitpoint = player.PlayerHitpoint.CurrentHitpointPercent;
-            navalWarshipInfo.SlotNumber = 4;
+            navalWarshipInfo.SlotNumber = 1;
 
-            GameObjectManager.Instance.CreateGameObject("NavalWarship", camera, 
-                "NavalWarship.mesh", "NavalWarship", 
-                navalWarshipInfo, camera.SceneManager.RootSceneNode);
+            var navalWarshipObject = GameObjectManager.Instance.CreateGameObject("NavalWarship", camera, 
+                "NavalWarship.mesh", "NavalWarshipMat", 
+                navalWarshipInfo, camera.SceneManager.RootSceneNode,
+                new Mogre.Vector3(0, 0, 0));
+            navalWarshipObject.Initization();
         }
 
         private void switchNextLevel()
@@ -151,6 +157,25 @@ namespace AirRaidRedSea
 
         public void InjectKeyDown(KeyEvent evt)
         {
+            if (evt.key == MOIS.KeyCode.KC_W)
+                camera.MoveRelative(new Mogre.Vector3(0, 0, -0.1f));
+            if (evt.key == MOIS.KeyCode.KC_S)
+                camera.MoveRelative(new Mogre.Vector3(0, 0, 0.1f));
+            if (evt.key == MOIS.KeyCode.KC_A)
+                camera.MoveRelative(new Mogre.Vector3(-0.1f, 0, 0));
+            if (evt.key == MOIS.KeyCode.KC_D)
+                camera.MoveRelative(new Mogre.Vector3(0.1f, 0, 0));
+
+            if (evt.key == MOIS.KeyCode.KC_G)
+                camera.MoveRelative(new Mogre.Vector3(0, 0.1f, 0));
+            if (evt.key == MOIS.KeyCode.KC_T)
+                camera.MoveRelative(new Mogre.Vector3(0, -0.1f, 0));
+
+            if (evt.key == MOIS.KeyCode.KC_Z)
+                camera.Yaw(0.1f);
+            if (evt.key == MOIS.KeyCode.KC_X)
+                camera.Pitch(0.1f);
+
             currentLevel.InjectKeyDown(evt);
         }
 
@@ -161,6 +186,7 @@ namespace AirRaidRedSea
 
         public void Update(double timeSinceLastFrame)
         {
+            currentLevel.Update(timeSinceLastFrame);
         }
     }
 
@@ -192,26 +218,41 @@ namespace AirRaidRedSea
 
         public void InjectMouseMove(MouseEvent evt)
         {
+            if (currentControlledObject == null)
+                return;
+
             currentControlledObject.InjectMouseMove(evt);
         }
 
         public void InjectMouseDown(MouseEvent evt, MouseButtonID id)
         {
+            if (currentControlledObject == null)
+                return;
+
             currentControlledObject.InjectMouseDown(evt, id);
         }
 
         public void InjectMouseUp(MouseEvent evt, MouseButtonID id)
         {
+            if (currentControlledObject == null)
+                return;
+
             currentControlledObject.InjectMouseUp(evt, id);
         }
 
         public void InjectKeyDown(KeyEvent evt)
         {
+            if (currentControlledObject == null)
+                return;
+
             currentControlledObject.InjectKeyDown(evt);
         }
 
         public void InjectKeyUp(KeyEvent evt)
         {
+            if (currentControlledObject == null)
+                return;
+
             currentControlledObject.InjectKeyDown(evt);
         }
 
@@ -224,6 +265,14 @@ namespace AirRaidRedSea
         {
             //Clear the scene
             currentControlledObject.Destroy();
+        }
+
+        public void Update(double deltaTime)
+        {
+            if (currentControlledObject == null)
+                return;
+
+            currentControlledObject.Update(deltaTime);
         }
     }
 }

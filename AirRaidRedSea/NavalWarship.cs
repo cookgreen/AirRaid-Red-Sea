@@ -11,7 +11,8 @@ namespace AirRaidRedSea
     {
         public float Speed { get; set; }
         public float SlotNumber { get; set; }
-        public List<Vector3> SlotPosition { get; set; }
+        public List<Vector3> SlotPositions { get; set; }
+        public List<Vector3> OffsetPositions { get; set; }
         public float Hitpoint { get; set; }
     }
 
@@ -30,20 +31,25 @@ namespace AirRaidRedSea
             get { return slots; }
         }
 
-        public NavalWarship(GameObjectInfo shipInfo, Camera camera, string meshName, string meshMaterialName, SceneNode parentNode) : 
-            base(shipInfo, camera, meshName, meshMaterialName)
+        public NavalWarship(GameObjectInfo shipInfo, Camera camera, string meshName, string meshMaterialName, SceneNode parentNode, Vector3 initPosition) : 
+            base(shipInfo, camera, meshName, meshMaterialName, parentNode, initPosition)
         {
             this.camera = camera;
             this.shipInfo = shipInfo as NavalWarshipInfo;
-            controller = new NavalWarshipController(camera, meshName, meshMaterialName, parentNode);
+            controller = new NavalWarshipController(camera, meshName, meshMaterialName, parentNode, initPosition);
             slots = new List<NavalWarshipOperatorSlot>();
         }
 
-        public void Initization()
+        public override void Initization()
         {
+            base.Initization();
+
             for (int i = 0; i < shipInfo.SlotNumber; i++)
             {
-                NavalWarshipOperatorSlot slot = new NavalWarshipOperatorSlot(i + 1, this, shipInfo.SlotPosition[i]);
+                NavalWarshipOperatorSlot slot = new NavalWarshipOperatorSlot(
+                    i + 1, this, 
+                    shipInfo.SlotPositions[i],
+                    shipInfo.OffsetPositions[i]);
                 slot.Initization(camera);
                 slots.Add(slot);
             }
@@ -55,9 +61,9 @@ namespace AirRaidRedSea
         {
             if (!IsFull)
             {
-                var unusedSlots = slots.Where(o => o.IsUsed);
+                var unusedSlots = slots.Where(o => !o.IsUsed);
                 var unusedRandomSlot = unusedSlots.Random();
-                unusedRandomSlot.Switch();
+                unusedRandomSlot.Switch(new Vector3(0, 0.1f, 0.2f));
             }
         }
 
@@ -73,6 +79,7 @@ namespace AirRaidRedSea
         private int slotIndex;
         private NavalWarship ship;
         private Vector3 position;
+        private Vector3 barrelOffsetPosition;
         private bool isUsed;
         private NavalAAGun navalAAGun;
 
@@ -96,10 +103,11 @@ namespace AirRaidRedSea
             get { return position; }
         }
 
-        public NavalWarshipOperatorSlot(int index, NavalWarship ship, Vector3 position) 
+        public NavalWarshipOperatorSlot(int index, NavalWarship ship, Vector3 position, Vector3 barrelOffsetPosition) 
         {
             this.ship = ship;
             this.position = position;
+            this.barrelOffsetPosition = barrelOffsetPosition;
             slotIndex = index;
             isUsed = false;
         }
@@ -110,14 +118,17 @@ namespace AirRaidRedSea
             navalAAGunInfo.ShootSpeed = 30;
             navalAAGunInfo.Ammo = 300;
             
-            navalAAGun = new NavalAAGun(navalAAGunInfo, camera, "NavalAAGun.mesh", "NavalAAGun", ship.Controller.SceneNode);
-            ship.AttachGameObject(navalAAGun);
+            navalAAGun = new NavalAAGun(navalAAGunInfo, camera, 
+                "NavalAAGun.mesh", "NavalAAGunMat", 
+                ship.Controller.SceneNode,
+                position);
+            navalAAGun.Initization();
+            navalAAGun.AttachBarrel("NavalAAGunBarrel.mesh", "NavalAAGunBarrelMat", barrelOffsetPosition);
         }
 
-        public void Switch()
+        public void Switch(Vector3 cameraOffset)
         {
-            ship.DetachCamera();
-            navalAAGun.AttachCamera();
+            navalAAGun.AttachCamera(cameraOffset);
             GameObjectManager.Instance.PlayerControlGameObjectChanged(navalAAGun, "NavalAAGun");
         }
     }

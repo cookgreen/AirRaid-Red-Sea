@@ -20,7 +20,6 @@ namespace AirRaidRedSea
 
         public GameState()
         {
-            game = new AirRaidRedSeaGame(UserData as GameLevelsXml);
         }
 
         public override void Enter()
@@ -28,15 +27,18 @@ namespace AirRaidRedSea
             OgreFramework.Instance.trayMgr.destroyAllWidgets();
 
             sceneMgr = OgreFramework.Instance.root.CreateSceneManager(Mogre.SceneType.ST_GENERIC);
+            sceneMgr.AmbientLight = new ColourValue(1, 1, 1);
             sceneMgr.SetSkyDome(true, "Examples/CloudySky", 5, 8);
 
             camera = sceneMgr.CreateCamera("GameCamera");
-            camera.SetPosition(0, 0, 800);
+            camera.SetPosition(0, 0, 0);
             camera.LookAt(0, 0, 0);
-            camera.NearClipDistance = 1;
+            camera.NearClipDistance = 0.01f;
+            camera.FarClipDistance = 1000;
             camera.AspectRatio = OgreFramework.Instance.viewport.ActualWidth /
                 OgreFramework.Instance.viewport.ActualHeight;
             OgreFramework.Instance.viewport.Camera = camera;
+            camera.FOVy = Mogre.Math.ATan(60 / 2) * camera.AspectRatio;
 
             OgreFramework.Instance.mouse.MouseMoved += mouseMoved;
             OgreFramework.Instance.mouse.MousePressed += mousePressed;
@@ -52,6 +54,7 @@ namespace AirRaidRedSea
             OgreFramework.Instance.trayMgr.hideCursor();
             PointerManager.Instance.Visible = false;
 
+            game = new AirRaidRedSeaGame(UserData as GameLevelsXml);
             game.Setup(camera);
         }
 

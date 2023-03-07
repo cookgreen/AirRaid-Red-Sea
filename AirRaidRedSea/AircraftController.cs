@@ -9,8 +9,8 @@ namespace AirRaidRedSea
 {
     public class AircraftController : GameObjectController
     {
-        public AircraftController(Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode) : 
-            base(camera, meshName, meshMaterialName, parentSceneNode)
+        public AircraftController(Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode, Mogre.Vector3 initPosition) : 
+            base(camera, meshName, meshMaterialName, parentSceneNode, initPosition)
         {
 
         }

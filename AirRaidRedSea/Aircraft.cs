@@ -51,11 +51,11 @@ namespace AirRaidRedSea
         }
         public AircraftInfo AircraftInfo { get; set; }
 
-        public Aircraft(GameObjectInfo gameObjectInfo, Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode) : 
-            base(gameObjectInfo, camera, meshName, meshMaterialName, parentSceneNode)
+        public Aircraft(GameObjectInfo gameObjectInfo, Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode, Vector3 initPosition) : 
+            base(gameObjectInfo, camera, meshName, meshMaterialName, parentSceneNode, initPosition)
         {
             id = "Aircraft-" + id;
-            controller = new AircraftController(camera, meshName, meshMaterialName, parentSceneNode);
+            controller = new AircraftController(camera, meshName, meshMaterialName, parentSceneNode, initPosition);
             weapons = new List<AircraftWeapon>();
         }
     }

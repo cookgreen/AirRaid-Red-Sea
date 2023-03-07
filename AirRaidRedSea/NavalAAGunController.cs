@@ -1,10 +1,12 @@
 ﻿using Mogre;
+using Mogre.PhysX;
 using MOIS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Vector3 = Mogre.Vector3;
 
 namespace AirRaidRedSea
 {
@@ -12,8 +14,18 @@ namespace AirRaidRedSea
     {
         private SceneNode navalAAGunBarrelSceneNode;
 
-        public NavalAAGunController(Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode)
-            : base(camera, meshName, meshMaterialName, parentSceneNode)
+        private Vector2 mousePositionLast;
+        private Vector2 mousePositionNew;
+        private Vector2 mouseMoveDirection;
+
+        private float xAngle = 0;
+        private float yAngle = 0;
+
+        private const float AAGUN_LIMIT_ANGLE_MAX = 90;
+        private const float AAGUN_LIMIT_ANGLE_MIN = 0;
+
+        public NavalAAGunController(Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode, Vector3 initPosition)
+            : base(camera, meshName, meshMaterialName, parentSceneNode, initPosition)
         {
         }
 
@@ -21,12 +33,19 @@ namespace AirRaidRedSea
         {
             SceneManager sceneManager = camera.SceneManager;
             var ent = sceneManager.CreateEntity(getRandomEntityName(), meshName);
+            setMaterialName(ent, meshMaterialName);
             sceneNode = parentSceneNode.CreateChildSceneNode();
+            sceneNode.SetPosition(position.x, position.y, position.z);
             sceneNode.AttachObject(ent);
+        }
 
-            ent = camera.SceneManager.CreateEntity(getRandomEntityName(), "NavalAAGunBarrel.mesh");
+        public void AttachBarrel(string meshName, string meshMaterialName, Mogre.Vector3 position)
+        {
+            var ent = camera.SceneManager.CreateEntity(getRandomEntityName(), meshName);
+            setMaterialName(ent, meshMaterialName);
             navalAAGunBarrelSceneNode = sceneNode.CreateChildSceneNode();
             navalAAGunBarrelSceneNode.AttachObject(ent);
+            navalAAGunBarrelSceneNode.SetPosition(position.x, position.y, position.z);
 
             cameraSceneNode = navalAAGunBarrelSceneNode.CreateChildSceneNode();
         }
@@ -41,8 +60,8 @@ namespace AirRaidRedSea
                 }
                 else
                 {
-                    AmmoManager.Instance.RemoveAmmo(1);
-                    SoundManager.Instance.PlaySound("gun-fire.mp3");
+                    //AmmoManager.Instance.RemoveAmmo(1);
+                    //SoundManager.Instance.PlaySound("gun-fire.mp3");
                     //Shoot the bullet
                 }
             }
@@ -50,7 +69,25 @@ namespace AirRaidRedSea
 
         public override void InjectMouseMove(MouseEvent evt)
         {
-            base.InjectMouseMove(evt);
+            mousePositionLast = mousePositionNew;
+            mousePositionNew = new Vector2(evt.state.X.abs, evt.state.Y.abs);
+        }
+
+        public override void Update(double timeSinceLastFrame)
+        {
+            if (isUsing)
+            {
+                camera.Position = cameraSceneNode.Position;
+                //camera.MoveRelative(new Mogre.Vector3(0, 0, (float)(70 + 80 * timeSinceLastFrame)));
+
+                mouseMoveDirection = mousePositionNew - mousePositionLast;
+
+                xAngle = mouseMoveDirection.x * -0.1f;
+                yAngle = mouseMoveDirection.y * -0.1f;
+
+                sceneNode.Yaw(new Radian(new Degree(xAngle)));
+                navalAAGunBarrelSceneNode.Pitch(new Radian(new Degree(yAngle)));
+            }
         }
     }
 }

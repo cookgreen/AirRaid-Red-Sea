@@ -17,15 +17,20 @@ namespace AirRaidRedSea
     {
         public NavalAAGunInfo NavalAAGunInfo { get; set; }
 
-        public NavalAAGun(GameObjectInfo gameObjectInfo, Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode) : 
-            base(gameObjectInfo, camera, meshName, meshMaterialName, parentSceneNode)
+        public NavalAAGun(GameObjectInfo gameObjectInfo, Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode, Vector3 initPosition) : 
+            base(gameObjectInfo, camera, meshName, meshMaterialName, parentSceneNode, initPosition)
         {
-            controller = new NavalAAGunController(camera, meshName, meshMaterialName, parentSceneNode);
+            controller = new NavalAAGunController(camera, meshName, meshMaterialName, parentSceneNode, initPosition);
         }
 
-        public void AttachCamera()
+        public void AttachBarrel(string meshName, string meshMaterialName, Vector3 position)
         {
-            controller.AttachCamera();
+            ((NavalAAGunController)controller).AttachBarrel(meshName, meshMaterialName, position);
+        }
+
+        public void AttachCamera(Vector3 cameraOffset)
+        {
+            controller.AttachCamera(cameraOffset);
         }
     }
 }
