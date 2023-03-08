@@ -137,6 +137,7 @@
     <Compile Include="GameObjectController.cs" />
     <Compile Include="GameObjectInfo.cs" />
     <Compile Include="GameObjectManager.cs" />
+    <Compile Include="MeshToNavmesh.cs" />
     <Compile Include="NavalAAGun.cs" />
     <Compile Include="Aircraft.cs" />
     <Compile Include="AircraftController.cs" />

@@ -33,29 +33,28 @@ namespace AirRaidRedSea
             string typeName, Camera camera, 
             string meshName, string meshMaterialName,
             GameObjectInfo gameObjectInfo,
-            SceneNode parentSceneNode, 
             Vector3 initPosition)
         {
             GameObject gameObject = null;
 
             switch(typeName)
             {
-                case "Aircraft":
-                    gameObject = new Aircraft(gameObjectInfo, 
-                        camera, meshName, meshMaterialName, 
-                        parentSceneNode, initPosition);
+                case "AircraftAI":
+                    gameObject = new AircraftAI(gameObjectInfo, 
+                        camera, meshName, meshMaterialName,
+                        camera.SceneManager.RootSceneNode, initPosition);
+                    break;
+                case "WarshipAI":
                     break;
                 case "NavalWarship":
                     gameObject = new NavalWarship(gameObjectInfo, 
                         camera, meshName, meshMaterialName, 
-                        parentSceneNode, initPosition);
+                        camera.SceneManager.RootSceneNode, initPosition);
                     break;
                 case "NavalAAGun":
                     gameObject = new NavalAAGun(gameObjectInfo, 
-                        camera, meshName, meshMaterialName, 
-                        parentSceneNode, initPosition);
-                    break;
-                case "EnemyWarship":
+                        camera, meshName, meshMaterialName,
+                        camera.SceneManager.RootSceneNode, initPosition);
                     break;
                 default:
                     break;
@@ -101,6 +100,11 @@ namespace AirRaidRedSea
             }
 
             return resultGameObjects;
+        }
+
+        public GameObject GetGameObjectByID(string gameObjectID)
+        {
+            return gameObjects.Where(o=>o.ID == gameObjectID).FirstOrDefault();
         }
     }
 }

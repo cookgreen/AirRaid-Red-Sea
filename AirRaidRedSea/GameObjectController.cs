@@ -119,5 +119,13 @@ namespace AirRaidRedSea
             sceneNode.RemoveAndDestroyAllChildren();
             sceneNode.Dispose();
         }
+
+        public void AddNewSubEntity(string meshName, Mogre.Vector3 position, SceneNode sceneNode)
+        {
+            var ent = camera.SceneManager.CreateEntity(getRandomEntityName(), meshName);
+            var subSceneNode = sceneNode.CreateChildSceneNode();
+            subSceneNode.AttachObject(ent);
+            subSceneNode.SetPosition(position.x, position.y, position.z);
+        }
     }
 }

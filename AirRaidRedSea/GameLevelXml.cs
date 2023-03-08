@@ -27,8 +27,13 @@ namespace AirRaidRedSea
     {
         [XmlAttribute("scene")]
         public string Scene { get; set; }
+        [XmlAttribute("radio_music")]
+        public string RadioMusic { get; set; }
         [XmlAttribute("ambient_music")]
         public string AmbientMusic { get; set; }
+        [XmlAttribute("ambient_battle")]
+        public string AmbientBattle { get; set; }
+
         [XmlElement]
         public int AircraftNumber { get; set; }
         [XmlElement("AircraftFighter")]

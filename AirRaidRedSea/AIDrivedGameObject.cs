@@ -42,6 +42,11 @@ namespace AirRaidRedSea
         {
             aiBrain.Think(timeSinceLastFrame);
         }
+
+        public virtual void WaypointReached()
+        {
+
+        }
     }
 
     /// <summary>
@@ -61,6 +66,11 @@ namespace AirRaidRedSea
         public override void Update(double deltaTime)
         {
             aiController.Update(deltaTime);
+        }
+
+        public void WaypointReached()
+        {
+            aiController.WaypointReached();
         }
     }
 }

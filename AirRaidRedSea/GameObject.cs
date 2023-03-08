@@ -17,6 +17,11 @@ namespace AirRaidRedSea
         protected GameObjectController controller;
         protected List<GameObject> attachedGameObjects;
 
+        public string ID
+        {
+            get { return id; }
+        }
+
         public GameObjectController Controller
         {
             get { return controller; }

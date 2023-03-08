@@ -3,6 +3,7 @@ using MOIS;
 using MyGUI.Sharp;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -105,7 +106,7 @@ namespace AirRaidRedSea
 
             var navalWarshipObject = GameObjectManager.Instance.CreateGameObject("NavalWarship", camera, 
                 "NavalWarship.mesh", "NavalWarshipMat", 
-                navalWarshipInfo, camera.SceneManager.RootSceneNode,
+                navalWarshipInfo,
                 new Mogre.Vector3(0, 0, 0));
             navalWarshipObject.Initization();
         }
@@ -200,6 +201,10 @@ namespace AirRaidRedSea
         private GameLevelXml levelData;
         private Camera camera;
         private GameObject currentControlledObject;
+        private Stack<string> enemyTypes;
+
+        private int currentDelay;
+        private int initDelay;
 
         public int LevelNumber
         {
@@ -211,13 +216,71 @@ namespace AirRaidRedSea
             this.levelNumber = levelNumber;
             this.levelData = levelData;
             this.camera = camera;
+            enemyTypes = new Stack<string>();
+            SoundManager.Instance.OnSoundPlayerTriggerEvent += OnSoundPlayTriggeredEvent;
+        }
+
+        private void OnSoundPlayTriggeredEvent(string soundName)
+        {
+            if (soundName == Path.GetFileNameWithoutExtension(levelData.RadioMusic))
+            {
+                SoundManager.Instance.PlayEvent("alarm.ogg");
+            }
+            else if (soundName == "alarm")
+            {
+                currentDelay = 0;
+                SoundManager.Instance.PlayLoop(levelData.AmbientMusic);
+                SoundManager.Instance.PlayLoop(levelData.AmbientBattle);
+            }
         }
 
         public void Start()
         {
-            GameObjectManager.Instance.OnPlayerControlGameObjectChanged += PlayerControlGameObjectChanged;
+            currentDelay = -1;
+            initDelay = 100;
 
-            //Create Enemeies
+            GameObjectManager.Instance.OnPlayerControlGameObjectChanged += PlayerControlGameObjectChanged;
+            var aircraftFighterNumber = levelData.AircraftFighterNumber;
+            var aircraftBomberNumber = levelData.AircraftBomberNumber;
+            var aircraftAssultNumber = levelData.AircraftAssultNumber;
+            var aircraftTorpedoNumber = levelData.AircraftTorpedoNumber;
+            int numMax = 1;
+            if (aircraftBomberNumber > 0)
+            {
+                numMax++;
+            }
+            if(aircraftTorpedoNumber > 0)
+            {
+                numMax++;
+            }
+            if (aircraftAssultNumber > 0)
+            {
+                numMax++;
+            }
+            Random rand = new Random();
+
+            for (int i = 0; i < levelData.AircraftNumber; i++)
+            {
+                int random = rand.Next(0, numMax);
+                if (random == 0)
+                {
+                    enemyTypes.Push("AircraftFighter");
+                }
+                else if (random == 1)
+                {
+                    enemyTypes.Push("AircraftBomber");
+                }
+                else if (random == 2)
+                {
+                    enemyTypes.Push("AircraftTorpedo");
+                }
+                else if (random == 3)
+                {
+                    enemyTypes.Push("AircraftAssult");
+                }
+            }
+
+            SoundManager.Instance.PlayEvent(levelData.RadioMusic);
         }
 
         public void InjectMouseMove(MouseEvent evt)
@@ -277,6 +340,95 @@ namespace AirRaidRedSea
                 return;
 
             currentControlledObject.Update(deltaTime);
+
+            if (currentDelay == -1)
+                return;
+
+            if (currentDelay == initDelay)
+            {
+                if (enemyTypes.Count == 0)
+                {
+                    currentDelay = -1;
+                    return;
+                }
+
+                GameObject gameObject;
+                PropelleredAircraftInfo propelleredAircraftInfo = new PropelleredAircraftInfo();
+                string enemyType = enemyTypes.Pop();
+                switch (enemyType)
+                {
+                    case "AircraftFighter":
+                        propelleredAircraftInfo.AircraftType = AircraftType.Fighter;
+                        propelleredAircraftInfo.Speed = 30;
+                        propelleredAircraftInfo.PropellerOffsets = new List<Mogre.Vector3>()
+                    {
+                        new Mogre.Vector3(0, 0, 0.5f)
+                    };
+                        propelleredAircraftInfo.PropellerMeshNames = new List<string>()
+                    {
+                        "AircraftFighter_BF109_Propeller.mesh"
+                    };
+                        gameObject = GameObjectManager.Instance.CreateGameObject("AircraftAI", camera,
+                            "AircraftFighter_BF109.mesh", "AircraftFighter_BF109",
+                            propelleredAircraftInfo, new Mogre.Vector3());
+                        gameObject.Initization();
+                        break;
+                    case "AircraftBomber":
+                        propelleredAircraftInfo.AircraftType = AircraftType.Fighter;
+                        propelleredAircraftInfo.Speed = 15;
+                        propelleredAircraftInfo.PropellerOffsets = new List<Mogre.Vector3>()
+                    {
+                        new Mogre.Vector3(0, 0, 0.5f)
+                    };
+                        propelleredAircraftInfo.PropellerMeshNames = new List<string>()
+                    {
+                        "AircraftBomber_Junker88_Propeller_1.mesh",
+                        "AircraftBomber_Junker88_Propeller_2.mesh"
+                    };
+                        gameObject = GameObjectManager.Instance.CreateGameObject(
+                            "AircraftAI", camera, "AircraftBomber_Junker88.mesh",
+                            "AircraftFighter_BF109", propelleredAircraftInfo, new Mogre.Vector3());
+                        gameObject.Initization();
+                        break;
+                    case "AircraftTorpedo":
+                        propelleredAircraftInfo.AircraftType = AircraftType.Fighter;
+                        propelleredAircraftInfo.Speed = 35;
+                        propelleredAircraftInfo.PropellerOffsets = new List<Mogre.Vector3>()
+                    {
+                        new Mogre.Vector3(0, 0, 0.5f)
+                    };
+                        propelleredAircraftInfo.PropellerMeshNames = new List<string>()
+                    {
+                        "AircraftTorpedo_Propeller.mesh"
+                    };
+                        gameObject = GameObjectManager.Instance.CreateGameObject(
+                            "AircraftAI", camera, "AircraftTorpedo.mesh",
+                            "AircraftTorpedo", propelleredAircraftInfo, new Mogre.Vector3());
+                        gameObject.Initization();
+                        break;
+                    case "AircraftAssult":
+                        propelleredAircraftInfo.AircraftType = AircraftType.Fighter;
+                        propelleredAircraftInfo.Speed = 50;
+                        propelleredAircraftInfo.PropellerOffsets = new List<Mogre.Vector3>()
+                    {
+                        new Mogre.Vector3(0, 0, 0.5f)
+                    };
+                        propelleredAircraftInfo.PropellerMeshNames = new List<string>()
+                    {
+                        "AircraftAssult_Propeller.mesh"
+                    };
+                        gameObject = GameObjectManager.Instance.CreateGameObject(
+                            "AircraftAI", camera, "AircraftAssult.mesh",
+                            "AircraftAssult", propelleredAircraftInfo, new Mogre.Vector3());
+                        gameObject.Initization();
+                        break;
+                }
+                currentDelay = 0;
+            }
+            else
+            {
+                currentDelay++;
+            }
         }
     }
 }

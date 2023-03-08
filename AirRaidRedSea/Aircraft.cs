@@ -99,7 +99,7 @@ namespace AirRaidRedSea
 
         public override void Think(double timeSinceLastFrame)
         {
-            Aircraft aircraftObject = aiController.AIObject as Aircraft;
+            AircraftAI aircraftObject = aiController.AIObject as AircraftAI;
             foreach(var weapon in aircraftObject.Weapons)
             {
                 float range = ((WeaponInfo)weapon.Info).Range;
@@ -113,16 +113,9 @@ namespace AirRaidRedSea
         }
     }
 
-    public class AircraftAIController : AIDrivedGameObjectController
+    public class AircraftAI : AIDrivedGameObject
     {
-        public AircraftAIController(Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode, Vector3 initPosition) : 
-            base(camera, meshName, meshMaterialName, parentSceneNode, initPosition)
-        {
-        }
-    }
-
-    public class Aircraft : AIDrivedGameObject
-    {
+        private int HP;
         private List<Weapon> weapons;
 
         public List<Weapon> Weapons
@@ -131,12 +124,72 @@ namespace AirRaidRedSea
         }
         public AircraftInfo AircraftInfo { get; set; }
 
-        public Aircraft(GameObjectInfo gameObjectInfo, Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode, Vector3 initPosition) : 
+        public AircraftAI(GameObjectInfo gameObjectInfo, Camera camera, string meshName, string meshMaterialName, SceneNode parentSceneNode, Vector3 initPosition) : 
             base(gameObjectInfo, camera, meshName, meshMaterialName, parentSceneNode, initPosition)
         {
             id = "Aircraft-" + id;
-            controller = new AircraftController(camera, meshName, meshMaterialName, parentSceneNode, initPosition);
+            controller = new AircraftAIController(this, camera, meshName, meshMaterialName, parentSceneNode, initPosition);
             weapons = new List<Weapon>();
+            AircraftInfo aircraftInfo = gameObjectInfo as AircraftInfo;
+            switch(aircraftInfo.AircraftType)
+            {
+                case AircraftType.Fighter:
+                    HP = 600;
+                    break;
+                case AircraftType.Bomber:
+                    HP = 800;
+                    break;
+                case AircraftType.Torpedo:
+                    HP = 850;
+                    break;
+                case AircraftType.Scout:
+                    HP = 750;
+                    break;
+                case AircraftType.Assult:
+                    HP = 900;
+                    break;
+            }
+        }
+
+        public void OnHit(GameObject hitter, int damage)
+        {
+            HP -= damage;
+            if (HP < 0)
+            {
+                HP = 0;
+            }
+        }
+
+        public override void Update(double deltaTime)
+        {
+            if (HP == 0)
+            {
+                ((AircraftAIController)controller).Crash();
+            }
+        }
+    }
+
+    public class PropelleredAircraftInfo : AircraftInfo
+    {
+        public List<string> PropellerMeshNames { get; set; }
+        public List<Vector3> PropellerOffsets { get; set; }
+
+        public PropelleredAircraftInfo()
+        {
+            PropellerMeshNames = new List<string>();
+            PropellerOffsets = new List<Vector3>();
+        }
+    }
+
+    public class PropelleredAircraftAI : AircraftAI
+    {
+        public PropelleredAircraftAI(
+            GameObjectInfo gameObjectInfo, Camera camera, 
+            string meshName, string meshMaterialName, 
+            SceneNode parentSceneNode, Vector3 initPosition) 
+            : base(gameObjectInfo, camera, meshName, meshMaterialName, parentSceneNode, initPosition)
+        {
+            controller = new PropelleredAircraftAIController(this, camera, meshName, meshMaterialName, parentSceneNode, initPosition);
         }
     }
 }
