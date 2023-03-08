@@ -71,6 +71,24 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="cai-nav">
+      <HintPath>..\Depends\cai-nav.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nav-rcn">
+      <HintPath>..\Depends\cai-nav-rcn.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nmbuild">
+      <HintPath>..\Depends\cai-nmbuild.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nmgen">
+      <HintPath>..\Depends\cai-nmgen.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-nmgen-rcn">
+      <HintPath>..\Depends\cai-nmgen-rcn.dll</HintPath>
+    </Reference>
+    <Reference Include="cai-util">
+      <HintPath>..\Depends\cai-util.dll</HintPath>
+    </Reference>
     <Reference Include="eyecm.PhysX">
       <HintPath>..\Depends\eyecm.PhysX.dll</HintPath>
     </Reference>
@@ -110,6 +128,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AIDrivedGameObject.cs" />
     <Compile Include="AirRaidRedSeaGame.cs" />
     <Compile Include="AmmoManager.cs" />
     <Compile Include="Export.cs" />
@@ -134,6 +153,8 @@
     <Compile Include="SoundManager.cs" />
     <Compile Include="NavalWarship.cs" />
     <Compile Include="NavalWarshipController.cs" />
+    <Compile Include="WaypointsManager.cs" />
+    <Compile Include="Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AirRaidRedSea.ico" />

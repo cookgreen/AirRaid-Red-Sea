@@ -9,6 +9,8 @@ namespace AirRaidRedSea
 {
     public class GameObjectManager
     {
+        private List<GameObject> gameObjects;
+
         private static GameObjectManager instance;
         public static GameObjectManager Instance
         {
@@ -24,7 +26,7 @@ namespace AirRaidRedSea
 
         public GameObjectManager()
         {
-
+            gameObjects = new List<GameObject>();
         }
 
         public GameObject CreateGameObject(
@@ -58,12 +60,47 @@ namespace AirRaidRedSea
                 default:
                     break;
             }
+            gameObject.TypeName = typeName;
+            gameObjects.Add(gameObject);
+
             return gameObject;
         }
 
         public void PlayerControlGameObjectChanged(GameObject gameObject, string typeName)
         {
             OnPlayerControlGameObjectChanged?.Invoke(gameObject, typeName);
+        }
+
+        public List<GameObject> FindGameObjectsInRange(GameObject srcGameObject, float range)
+        {
+            List<GameObject> resultGameObjects = new List<GameObject>();
+
+            foreach(var gameObject in gameObjects)
+            {
+                var vect = gameObject.Controller.Position - srcGameObject.Controller.Position;
+                if (vect.SquaredLength < range)
+                {
+                    resultGameObjects.Add(gameObject);
+                }
+            }
+
+            return resultGameObjects;
+        }
+
+        public List<GameObject> FindGameObjectsInRangeWithTypeName(GameObject srcGameObject, float range, string[] typeNames)
+        {
+            List<GameObject> resultGameObjects = new List<GameObject>();
+
+            foreach (var gameObject in gameObjects)
+            {
+                var vect = gameObject.Controller.Position - srcGameObject.Controller.Position;
+                if (vect.SquaredLength < range && typeNames.Contains(gameObject.TypeName))
+                {
+                    resultGameObjects.Add(gameObject);
+                }
+            }
+
+            return resultGameObjects;
         }
     }
 }

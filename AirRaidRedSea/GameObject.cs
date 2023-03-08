@@ -13,6 +13,7 @@ namespace AirRaidRedSea
         protected string id;
         protected string meshName;
         protected string meshMaterialName;
+        protected GameObjectInfo gameObjectInfo;
         protected GameObjectController controller;
         protected List<GameObject> attachedGameObjects;
 
@@ -20,10 +21,16 @@ namespace AirRaidRedSea
         {
             get { return controller; }
         }
+        public GameObjectInfo Info
+        {
+            get { return gameObjectInfo; }
+        }
+        public string TypeName { get; set; }
 
         public GameObject(GameObjectInfo gameObjectInfo, Camera camera, string meshName, string meshMaterialName, SceneNode paretSceneNode, Mogre.Vector3 initPosition)
         {
             id = Guid.NewGuid().ToString();
+            this.gameObjectInfo = gameObjectInfo;
             this.meshName = meshName;
             this.meshMaterialName = meshMaterialName;
             controller = new GameObjectController(camera, meshName, meshMaterialName, paretSceneNode, initPosition);
@@ -71,7 +78,7 @@ namespace AirRaidRedSea
             controller.Destroy();
         }
 
-        public void Update(double deltaTime)
+        public virtual void Update(double deltaTime)
         {
             controller.Update(deltaTime);
         }

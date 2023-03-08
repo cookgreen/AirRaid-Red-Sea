@@ -71,6 +71,10 @@ namespace AirRaidRedSea
 
         private void setupGame()
         {
+            WaypointsManager.Instance.LoadWaypointsFromMesh(sceneManager, "AircraftFight_Waypoint.mesh");
+            WaypointsManager.Instance.LoadWaypointsFromMesh(sceneManager, "AircraftBomber_Waypoint.mesh");
+            WaypointsManager.Instance.LoadWaypointsFromMesh(sceneManager, "AircraftTorpedo_Waypoint.mesh");
+
             AmmoManager.Instance.InitAmmo(300);
 
             player = new Player("Player1");
