@@ -45,7 +45,9 @@ namespace AirRaidRedSea
             txtLevelNumber.FontName = "Airal";
             txtLevelNumber.FontHeight = 30;
             txtLevelNumber.TextAlign = Align.Center;
-            txtLevelNumber.SetCaption("1");
+            txtLevelNumber.SetCaption(null);
+
+            player.UI.TextBoxLevelNumber = txtLevelNumber;
 
             var imgHealthBarEmpty = Gui.Instance.CreateWidget<StaticImage>("StaticImage", new IntCoord(0, 655, 200, 115), Align.Bottom | Align.HStretch, "Main");
             imgHealthBarEmpty.SetImageTexture("UI-Healthbar.png");
@@ -63,6 +65,8 @@ namespace AirRaidRedSea
             txtScore.FontHeight = 30;
             txtScore.TextAlign = Align.Center;
             txtScore.SetCaption("0");
+
+            player.UI.TextBoxScore = txtScore;
         }
 
         private void setupScene()
@@ -124,6 +128,9 @@ namespace AirRaidRedSea
             {
                 currentLevelNumber = 1;
             }
+
+            player.UI.TextBoxLevelNumber.SetCaption(currentLevel.ToString());
+
             currentLevel = new GameLevel(currentLevelNumber, gameLevelDataList.Levels[currentLevelNumber - 1], camera);
             currentLevel.Start();
         }

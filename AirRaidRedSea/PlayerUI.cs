@@ -35,6 +35,12 @@ namespace AirRaidRedSea
         {
             this.player = player;
             this.playerAmmoUI= playerAmmoUI;
+            ScoreManager.Instance.ScoreChanged += ScoreChanged;
+        }
+
+        private void ScoreChanged()
+        {
+            txtLevelScore.SetCaption(ScoreManager.Instance.Score.ToString());
         }
     }
 }
