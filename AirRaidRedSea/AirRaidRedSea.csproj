@@ -151,6 +151,7 @@
     <Compile Include="PlayerAmmoUI.cs" />
     <Compile Include="PlayerUI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScoreManager.cs" />
     <Compile Include="SoundManager.cs" />
     <Compile Include="NavalWarship.cs" />
     <Compile Include="NavalWarshipController.cs" />
