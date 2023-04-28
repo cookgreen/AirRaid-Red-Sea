@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirRaidRedSea", "AirRaidRedSea\AirRaidRedSea.csproj", "{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AirRaidLevelEditor", "AirRaidLevelEditor\AirRaidLevelEditor.csproj", "{9C17FF0C-6987-40F6-879D-99594830F2DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,14 @@ Global
 		{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}.Release|x86.ActiveCfg = Release|x86
 		{23C0EFF1-BD9A-4B95-BAEE-0E0973E4E9F9}.Release|x86.Build.0 = Release|x86
+		{9C17FF0C-6987-40F6-879D-99594830F2DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C17FF0C-6987-40F6-879D-99594830F2DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C17FF0C-6987-40F6-879D-99594830F2DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9C17FF0C-6987-40F6-879D-99594830F2DE}.Debug|x86.Build.0 = Debug|Any CPU
+		{9C17FF0C-6987-40F6-879D-99594830F2DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C17FF0C-6987-40F6-879D-99594830F2DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C17FF0C-6987-40F6-879D-99594830F2DE}.Release|x86.ActiveCfg = Release|Any CPU
+		{9C17FF0C-6987-40F6-879D-99594830F2DE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
