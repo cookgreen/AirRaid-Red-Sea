@@ -367,15 +367,9 @@ namespace AirRaidRedSea
                     case "AircraftFighter":
                         propelleredAircraftInfo.AircraftType = AircraftType.Fighter;
                         propelleredAircraftInfo.Speed = 30;
-                        propelleredAircraftInfo.PropellerOffsets = new List<Mogre.Vector3>()
-                    {
-                        new Mogre.Vector3(0, 0, 0.5f)
-                    };
-                        propelleredAircraftInfo.PropellerMeshNames = new List<string>()
-                    {
-                        "AircraftFighter_BF109_Propeller.mesh"
-                    };
-                        gameObject = GameObjectManager.Instance.CreateGameObject("AircraftAI", camera,
+                        propelleredAircraftInfo.PropellerOffsets = new List<Mogre.Vector3>() { new Mogre.Vector3(0, 0, 0.5f)};
+                        propelleredAircraftInfo.PropellerMeshNames = new List<string>() { "AircraftFighter_BF109_Propeller.mesh" };
+                        gameObject = GameObjectManager.Instance.CreateGameObject("AircraftFighterAI", camera,
                             "AircraftFighter_BF109.mesh", "AircraftFighter_BF109",
                             propelleredAircraftInfo, new Mogre.Vector3());
                         gameObject.Initization();
@@ -383,49 +377,37 @@ namespace AirRaidRedSea
                     case "AircraftBomber":
                         propelleredAircraftInfo.AircraftType = AircraftType.Fighter;
                         propelleredAircraftInfo.Speed = 15;
-                        propelleredAircraftInfo.PropellerOffsets = new List<Mogre.Vector3>()
-                    {
-                        new Mogre.Vector3(0, 0, 0.5f)
-                    };
+                        propelleredAircraftInfo.PropellerOffsets = new List<Mogre.Vector3>() { new Mogre.Vector3(0, 0, 0.5f) };
                         propelleredAircraftInfo.PropellerMeshNames = new List<string>()
-                    {
-                        "AircraftBomber_Junker88_Propeller_1.mesh",
-                        "AircraftBomber_Junker88_Propeller_2.mesh"
-                    };
+                        {
+                            "AircraftBomber_Junker88_Propeller_1.mesh",
+                            "AircraftBomber_Junker88_Propeller_2.mesh"
+                        };
                         gameObject = GameObjectManager.Instance.CreateGameObject(
-                            "AircraftAI", camera, "AircraftBomber_Junker88.mesh",
+                            "AircraftBomberAI", camera, "AircraftBomber_Junker88.mesh",
                             "AircraftFighter_BF109", propelleredAircraftInfo, new Mogre.Vector3());
                         gameObject.Initization();
                         break;
                     case "AircraftTorpedo":
                         propelleredAircraftInfo.AircraftType = AircraftType.Fighter;
                         propelleredAircraftInfo.Speed = 35;
-                        propelleredAircraftInfo.PropellerOffsets = new List<Mogre.Vector3>()
-                    {
-                        new Mogre.Vector3(0, 0, 0.5f)
-                    };
+                        propelleredAircraftInfo.PropellerOffsets = new List<Mogre.Vector3>() { new Mogre.Vector3(0, 0, 0.5f) };
                         propelleredAircraftInfo.PropellerMeshNames = new List<string>()
-                    {
-                        "AircraftTorpedo_Propeller.mesh"
-                    };
+                        {
+                            "AircraftTorpedo_Propeller.mesh"
+                        };
                         gameObject = GameObjectManager.Instance.CreateGameObject(
-                            "AircraftAI", camera, "AircraftTorpedo.mesh",
+							"AircraftTorpedoAI", camera, "AircraftTorpedo.mesh",
                             "AircraftTorpedo", propelleredAircraftInfo, new Mogre.Vector3());
                         gameObject.Initization();
                         break;
                     case "AircraftAssult":
                         propelleredAircraftInfo.AircraftType = AircraftType.Fighter;
                         propelleredAircraftInfo.Speed = 50;
-                        propelleredAircraftInfo.PropellerOffsets = new List<Mogre.Vector3>()
-                    {
-                        new Mogre.Vector3(0, 0, 0.5f)
-                    };
-                        propelleredAircraftInfo.PropellerMeshNames = new List<string>()
-                    {
-                        "AircraftAssult_Propeller.mesh"
-                    };
+                        propelleredAircraftInfo.PropellerOffsets = new List<Mogre.Vector3>() { new Mogre.Vector3(0, 0, 0.5f) };
+                        propelleredAircraftInfo.PropellerMeshNames = new List<string>() { "AircraftAssult_Propeller.mesh" };
                         gameObject = GameObjectManager.Instance.CreateGameObject(
-                            "AircraftAI", camera, "AircraftAssult.mesh",
+							"AircraftAssultAI", camera, "AircraftAssult.mesh",
                             "AircraftAssult", propelleredAircraftInfo, new Mogre.Vector3());
                         gameObject.Initization();
                         break;

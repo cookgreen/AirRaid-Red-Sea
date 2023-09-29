@@ -1,0 +1,57 @@
+Game:
+	Levels: 5
+    
+Level1:
+	Map: xxx
+	EnemyStrength:
+		Fighter: 
+ 			GerBf109: 20
+		Bomber: 0
+		Torpedo: 0
+		Tntercepter: 0
+	ReconnaissanceRate: 0
+    
+Level2:
+	Map: xxx
+	EnemyStrength:
+		Fighter: 
+ 			GerBf109: 30
+		Bomber: 0
+		Torpedo: 0
+		Tntercepter: 0
+	ReconnaissanceRate: 0
+    
+Level3:
+	Map: xxx
+	EnemyStrength:
+		Fighter: 
+ 			GerBf109: 25
+		Bomber: 
+ 			GerJu88: 10
+		Torpedo: 0
+		Tntercepter: 0
+	ReconnaissanceRate: 0
+    
+Level4:
+	Map: xxx
+	EnemyStrength:
+		Fighter: 
+ 			GerBf109: 30
+		Bomber: 
+ 			GerJu88: 10
+		Torpedo: 0
+		Tntercepter: 0
+	ReconnaissanceRate: 0
+    
+Level5:
+	Map: xxx
+	EnemyStrength:
+		Fighter: 
+ 			GerBf109: 35
+		Bomber: 
+ 			GerJu88: 10
+		Torpedo: 
+ 			GerHe111H: 5
+		Tntercepter: 0
+	ReconnaissanceRate: 0
+    

@@ -8,6 +8,15 @@ using System.Xml.Serialization;
 
 namespace AirRaidRedSea
 {
+    [XmlRoot("Game")]
+    public class GameXml
+    {
+
+
+        [XmlElement]
+        public GameLevelsXml Levels { get; set; }
+	}
+
     [XmlRoot("Levels")]
     public class GameLevelsXml
     {
@@ -46,5 +55,15 @@ namespace AirRaidRedSea
         public int AircraftAssultNumber { get; set; }
         [XmlElement("AircraftScout")]
         public int AircraftScoutNumber { get; set; }
+    }
+
+    [XmlRoot("LevelData")]
+    public class GameLevelDataXml
+    {
+        [XmlAttribute]
+        public string Name { get; set; }
+
+        [XmlText]
+        public string Value { get; set; }
     }
 }

@@ -1,0 +1,25 @@
+GerBf109:
+	Type: Fighter
+	Damage: 8
+	Model: bf109.fbx
+    
+GerStuka:
+	Type: Bomber
+	Damage: 10
+	IsDiveAttack: yes
+	Model: stuka.fbx
+    
+GerJu88:
+	Type: Bomber
+	Damage: 20
+	Model: ju88.fbx
+    
+GerHe111H:
+	Type: Torpedo
+	Damage：15
+	Model：he111H.fbx
+    
+GerFw189:
+	Type: Reconnaissance
+	Damage：0
+	Model：Fw189.fbx

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Game>
+  <DataSet>
+    <Data Name="AircraftFighter">
+      <DataPair Name="Model">Aircraft_BF109.mesh</DataPair>
+      <DataPair Name="Speed">80</DataPair>
+      <DataPair Name="Damage">40</DataPair>
+      <DataPair Name="Weapon1Offset">-100,100,0</DataPair>
+      <DataPair Name="Weapon2Offset">-100,100,0</DataPair>
+    </Data>
+    <Data Name="AircraftBomber">
+      <DataPair Name="Model">Aircraft_Junker88.mesh</DataPair>
+      <DataPair Name="Speed">45</DataPair>
+      <DataPair Name="Damage">70</DataPair>
+      <DataPair Name="Weapon1Offset">-100,100,0</DataPair>
+    </Data>
+    <Data Name="AircraftTorpedo">
+      <DataPair Name="Model">Aircraft_BF109.mesh</DataPair>
+      <DataPair Name="Speed">80</DataPair>
+      <DataPair Name="Damage">40</DataPair>
+      <DataPair Name="Weapon1Offset">-100,100,0</DataPair>
+      <DataPair Name="Weapon2Offset">-100,100,0</DataPair>
+    </Data>
+    <Data Name="AircraftAssult">
+      <DataPair Name="Model">Aircraft_BF109.mesh</DataPair>
+      <DataPair Name="Speed">80</DataPair>
+      <DataPair Name="Damage">40</DataPair>
+      <DataPair Name="Weapon1Offset">-100,100,0</DataPair>
+      <DataPair Name="Weapon2Offset">-100,100,0</DataPair>
+    </Data>
+    <Data Name="AircraftScout">
+      <DataPair Name="Model">Aircraft_BF109.mesh</DataPair>
+      <DataPair Name="Speed">80</DataPair>
+      <DataPair Name="Damage">0</DataPair>
+    </Data>
+  </DataSet>
+  <Levels>
+    <Level scene="level1.scene" radio_music="radio01.ogg" ambient_music="battle_bg_01.ogg" ambient_battle="bgbattle01.ogg">
+      <LevelData Name="AircraftNumber">20</LevelData>
+      <LevelData Name="AircraftFighter">20</LevelData>
+      <LevelData Name="AircraftBomber">0</LevelData>
+      <LevelData Name="AircraftTorpedo">0</LevelData>
+      <LevelData Name="AircraftAssult">0</LevelData>
+      <LevelData Name="AircraftScout">0</LevelData>
+    </Level>
+    <Level scene="level2.scene" radio_music="radio02.ogg" ambient_music="battle_bg_02.ogg" ambient_battle="bgbattle02.ogg">
+      <LevelData Name="AircraftNumber">25</LevelData>
+      <LevelData Name="AircraftFighter">20</LevelData>
+      <LevelData Name="AircraftBomber">5</LevelData>
+      <LevelData Name="AircraftTorpedo">0</LevelData>
+      <LevelData Name="AircraftAssult">0</LevelData>
+      <LevelData Name="AircraftScout">0</LevelData>
+    </Level>
+    <Level scene="level3.scene" radio_music="radio03.ogg" ambient_music="battle_bg_03.ogg"  ambient_battle="bgbattle03.ogg">
+      <LevelData Name="AircraftNumber">28</LevelData>
+      <LevelData Name="AircraftFighter">20</LevelData>
+      <LevelData Name="AircraftBomber">8</LevelData>
+      <LevelData Name="AircraftTorpedo">0</LevelData>
+      <LevelData Name="AircraftAssult">0</LevelData>
+      <LevelData Name="AircraftScout">0</LevelData>
+    </Level>
+  </Levels>
+</Game>

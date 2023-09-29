@@ -160,7 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AirRaidRedSea.ico" />
-    <Content Include="levels.xml" />
+    <Content Include="game.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
